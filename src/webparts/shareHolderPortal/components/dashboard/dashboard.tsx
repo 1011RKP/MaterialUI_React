@@ -68,8 +68,13 @@ export class DashBoard extends React.Component<any, any> {
       .get()
       .then(d => {
         if (d.length > 0) {
-          let totalShares = 0;
-          for (let index = 0; index <= 2; index++) {
+          let totalShares = 0; let totalLength = 0;
+          if (d.length <= 2) {
+            totalLength = d.length;
+          } else {
+            totalLength = 3;
+          }
+          for (let index = 0; index < totalLength; index++) {
             totalShares += parseFloat(d[index].shares.replace(/,/g, ""));
           }
           this.setState(prevState => ({

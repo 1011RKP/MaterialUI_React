@@ -310,13 +310,12 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
                 /> */}
               </TabPanel>
               <TabPanel value={this.state.value} index={2}>
-                Delegates
-                {/* <Delegates
+                <Delegates
                   properties={{
                     tenentURL: this.state.properties.tenentURL,
                     shareholderID: this.state.shareholderID
                   }}
-                /> */}
+                />
               </TabPanel>
               <TabPanel value={this.state.value} index={3}>
                 <OtherInformation

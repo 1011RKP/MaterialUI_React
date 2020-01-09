@@ -44,7 +44,7 @@ export class Delegates extends React.Component<any, any> {
       properties: this.props.properties,
       delegateInformation: [],
       delegateExist: 0,
-      AccountID: this.props.properties.AccountID,
+      shareholderID: this.props.properties.shareholderID,
       isInviteDeligates: false,
       delegateAccess: "Read Only",
       updatedDelegateAccess: "Read Only",
@@ -64,25 +64,27 @@ export class Delegates extends React.Component<any, any> {
   }
 
   public componentDidMount() {
-    if (this.state.AccountID !== undefined) {
-      this.getAccountInfromation(this.state.AccountID);
+    if (this.state.shareholderID !== undefined) {
+      this.getAccountInfromation(this.state.shareholderID);
     }
   }
 
   public getAccountInfromation(id): any {
     if (id) {
       let newWeb = new Web(this.state.properties.tenentURL);
-      const filter = "Title eq '" + id + "' and accountType eq 'Delegate'";
+      const filter = "shareholderID eq '" + id + "' and accountType eq 'Delegate'";
       newWeb.lists
-        .getByTitle("Shareholding User Details")
-        .items.select(
-          "Title",
-          "fullName",
-          "email",
-          "accountType",
-          "accessType",
-          "ID"
-        )
+      .getByTitle("Shareholdings")
+      .items.select(
+        "Title",
+        "unrestrictedShares",
+        "restrictedShares",
+        "vestedOptions",
+        "unvestedOptions",
+        "shares",
+        "options",
+        "shareholderID","ShareholderType","shareholderEmail"
+      )
         .orderBy("Title", true)
         .filter(filter)
         .get()
@@ -130,7 +132,7 @@ export class Delegates extends React.Component<any, any> {
             isAccessDialog_Open: false,
             editSnackbar_open: true
           });
-          this.getAccountInfromation(this.state.AccountID);
+          this.getAccountInfromation(this.state.shareholderID);
           setTimeout(() => {
             this.setState({ editSnackbar_open: false });
           }, 5000);
@@ -153,7 +155,7 @@ export class Delegates extends React.Component<any, any> {
             isAccessDialog_Open: false,
             editSnackbar_open: true
           });
-          this.getAccountInfromation(this.state.AccountID);
+          this.getAccountInfromation(this.state.shareholderID);
           setTimeout(() => {
             this.setState({ editSnackbar_open: false });
           }, 5000);
@@ -193,7 +195,7 @@ export class Delegates extends React.Component<any, any> {
     newWeb.lists
       .getByTitle("Shareholding Delegates")
       .items.add({
-        Title: this.state.AccountID,
+        Title: this.state.shareholderID,
         DelegateEmail: this.state.delegateEmailAddress.toString(),
         DelegateName: this.state.deligateName.toString(),
         DelegateAccess: this.state.delegateAccess.toString()
