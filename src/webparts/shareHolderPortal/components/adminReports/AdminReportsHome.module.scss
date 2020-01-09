@@ -1,0 +1,36 @@
+.AdminReportsHome{
+  .contentHead {
+  padding: 5px;
+  color: white !important;
+  box-shadow: 0 2px 2px 0 rgba(255, 152, 0, 0.14),
+    0 3px 1px -2px rgba(255, 152, 0, 0.2), 0 1px 5px 0 rgba(255, 152, 0, 0.12);
+  background-color: #cb2030;
+}
+
+.paper {
+  padding: 10px;
+}
+
+.cardHead_General {
+  margin-top: -30px !important;
+  color: white !important;
+  background-color: #0c69cc;
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+.addressBtn{
+  color:white
+}
+.electionBtn{
+  color:white
+}
+.tabsStyles {
+  color: black;
+  background-color: #eee;
+}
+.reactTable{
+  margin-left: 15px;
+  margin-top: 20px;
+}
+}

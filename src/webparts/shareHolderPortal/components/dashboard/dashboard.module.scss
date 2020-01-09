@@ -1,0 +1,94 @@
+.dashboard {
+  .contentHead {
+    padding: 5px;
+    color: white !important;
+    box-shadow: 0 2px 2px 0 rgba(255, 152, 0, 0.14),
+      0 3px 1px -2px rgba(255, 152, 0, 0.2), 0 1px 5px 0 rgba(255, 152, 0, 0.12);
+    background-color: #cb2030;
+  }
+  .contentHead {
+    padding: 5px;
+    color: white !important;
+    box-shadow: 0 2px 2px 0 rgba(255, 152, 0, 0.14),
+      0 3px 1px -2px rgba(255, 152, 0, 0.2), 0 1px 5px 0 rgba(255, 152, 0, 0.12);
+    background-color: #cb2030;
+  }
+
+  .paper {
+    padding: 10px;
+  }
+
+  .tabsStyles {
+    color: black;
+    background-color: #eee;
+  }
+
+  .container_documentMailingAddress {
+    margin-top: -30px !important;
+    color: white !important;
+    background-color: #976340;
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+
+  .container_trustee {
+    margin-top: -30px !important;
+    color: white !important;
+    background-color: #976340;
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+
+  .container_shareholder {
+    margin-top: -30px !important;
+    color: white !important;
+    background-color: #976340;
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+
+  .cardHead_General {
+    margin-top: -30px !important;
+    color: white !important;
+    background-color: #976340;
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+  .cardCategory {
+    padding: 10px;
+  }
+
+   .docPDF {
+    color: #cb2030;
+  }
+  .docLink {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .docTblHead {
+    color: #cb2030;
+  }
+
+  .tblCell{
+    line-height: 0.8rem
+  }
+  .adminOnlyLinks{
+    color:white!important;
+    text-decoration: none;
+  }
+  .adminOnlyLinks:hover{
+    color:white!important;
+    text-decoration: none;
+  }
+  .stockTbleHeadCell{
+    color: white;
+    padding: 10px;
+  }
+  .stockTbleCell{
+    padding: 10px;
+  }
+}
