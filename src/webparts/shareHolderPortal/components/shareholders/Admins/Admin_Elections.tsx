@@ -20,6 +20,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { sp, Web } from "@pnp/sp";
 import * as React from "react";
 import { CustomRadio, state_DD } from "../../common/common";
+import * as _ from "lodash";
 import styles from "../shareholders.module.scss";
 
 export class AdminElections extends React.Component<any, any> {
@@ -59,8 +60,10 @@ export class AdminElections extends React.Component<any, any> {
       submitted: false,
       hasError: false,
       electionSnackbar_open: false,
+      makeAvilable_Year:null,
       taxYearsTypesLink:
         this.props.properties.tenentURL + "/TaxYear/Allitemsg.aspx"
+
     };
   }
 
@@ -122,6 +125,83 @@ export class AdminElections extends React.Component<any, any> {
     });
     if (activeError.length === 0) {
       this.addElectiondataTolist();
+    }
+  }
+
+  public onTaxYearChange = (e) =>{
+    let yr = e.target.value;
+    let taxYear = this.state.years_DD;
+    let isYeatActive = [];
+    isYeatActive = _.filter(taxYear, (val) => {
+      return val.text === yr;
+    });
+    if (yr === "-- Please Select Tax Year --") {
+      this.setState({
+        ele_taxYear: yr,
+        ele_taxYear_Error: true
+      });
+    } else {
+      if (isYeatActive[0].makeAvilabled === "Yes") {
+        let electionInformation = [];
+        electionInformation = _.filter(this.state.electionInformation, (val) => {
+          return val.TaxYear === yr;
+        });
+        if (electionInformation.length === 1) {
+          this.setState({
+            ele_taxYear: yr,
+            ele_taxYear_Error: false,
+            de_disabled: false,
+            md_disabled: false,
+            nj_disabled: false,
+            pa_disabled: false,
+            va_disabled: false,
+            submitElection_Btn:false,
+            state_slected_disabled:false,
+            va_Val: electionInformation[0].Virginia,
+            de_Val: electionInformation[0].Delaware,
+            md_Val: electionInformation[0].Maryland,
+            pa_Val: electionInformation[0].Pennsylvania,
+            nj_Val: electionInformation[0].NewJersey,
+            state_slected:electionInformation[0].StateforStateTaxes
+          });
+
+        } else {
+          this.setState({
+            ele_taxYear: yr,
+            ele_taxYear_Error: false,
+            de_disabled: false,
+            md_disabled: false,
+            nj_disabled: false,
+            pa_disabled: false,
+            va_disabled: false,
+            submitElection_Btn:false,
+            state_slected_disabled:false,
+            va_Val: "none",
+            de_Val: "none",
+            md_Val: "none",
+            pa_Val: "none",
+            nj_Val: "none",
+            state_slected:"NA",
+          });
+        }
+      } else {
+        let electionInfo = this.state.electionInformation;
+        let electionInformation = [];
+        electionInformation = _.filter(electionInfo, (val) => {
+          return val.TaxYear === yr;
+        });
+        console.log(electionInformation);
+        this.setState({
+          ele_taxYear: yr,
+          ele_taxYear_Error: false,
+          va_Val: electionInformation[0].Virginia,
+          de_Val: electionInformation[0].Delaware,
+          md_Val: electionInformation[0].Maryland,
+          pa_Val: electionInformation[0].Pennsylvania,
+          nj_Val: electionInformation[0].NewJersey,
+          state_slected:electionInformation[0].StateforStateTaxes
+        });
+      }
     }
   }
 
@@ -253,7 +333,12 @@ export class AdminElections extends React.Component<any, any> {
             de_disabled: false,
             nj_disabled: false,
             pa_disabled: false,
-            va_disabled: false
+            va_disabled: false,
+            va_Val: "none",
+            de_Val: "none",
+            md_Val: "none",
+            pa_Val: "none",
+            nj_Val: "none",
           });
           console.log("default");
           break;
@@ -291,24 +376,61 @@ export class AdminElections extends React.Component<any, any> {
         .get()
         .then(d => {
           if (d.length > 0) {
-            this.setState(
-              {
-                electionInformation: d,
-                ele_taxYear: d[0].TaxYear !== null ? d[0].TaxYear : "NA",
-                state_slected:
-                  d[0].StateforStateTaxes !== null
-                    ? d[0].StateforStateTaxes
-                    : "NA",
-                de_Val: d[0].Delaware !== null ? d[0].Delaware : "none",
-                md_Val: d[0].Maryland !== null ? d[0].Maryland : "none",
-                nj_Val: d[0].NewJersey !== null ? d[0].NewJersey : "none",
-                pa_Val: d[0].Pennsylvania !== null ? d[0].Pennsylvania : "none",
-                va_Val: d[0].Virginia !== null ? d[0].Virginia : "none"
-              },
-              () => {
-                this.onLoadSetStateOptions();
-              }
-            );
+            let res = [];
+            let isYeatActive = [];
+            res = _.filter(d, val => {
+              return val.TaxYear === this.state.makeAvilable_Year;
+            });
+            isYeatActive = _.filter(this.state.years_DD, val => {
+              return val.text === this.state.makeAvilable_Year;
+            });
+            if (res.length === 1) {
+              this.setState(
+                {
+                  electionInformation: d,
+                  ele_taxYear: res[0].TaxYear !== null ? res[0].TaxYear : "NA",
+                  state_slected:
+                    res[0].StateforStateTaxes !== null
+                      ? res[0].StateforStateTaxes
+                      : "NA",
+                  de_Val: res[0].Delaware !== null ? res[0].Delaware : "none",
+                  md_Val: res[0].Maryland !== null ? res[0].Maryland : "none",
+                  nj_Val: res[0].NewJersey !== null ? res[0].NewJersey : "none",
+                  pa_Val:
+                    res[0].Pennsylvania !== null ? res[0].Pennsylvania : "none",
+                  va_Val: res[0].Virginia !== null ? res[0].Virginia : "none",
+                  de_disabled: false,
+                  md_disabled: false,
+                  nj_disabled: false,
+                  pa_disabled: false,
+                  va_disabled: false
+                },
+                () => {
+                  this.onLoadSetStateOptions();
+                }
+              );
+            } else {
+              this.setState(
+                {
+                  electionInformation: d,
+                  state_slected: "NA",
+                  ele_taxYear: "-- Please Select Tax Year --",
+                  de_Val: "none",
+                  md_Val: "none",
+                  nj_Val: "none",
+                  pa_Val: "none",
+                  va_Val: "none",
+                  de_disabled: false,
+                  md_disabled: false,
+                  nj_disabled: false,
+                  pa_disabled: false,
+                  va_disabled: false
+                },
+                () => {
+                  this.onLoadSetStateOptions();
+                }
+              );
+            }
           } else {
             this.setState({
               electionInformation: [],
@@ -353,6 +475,14 @@ export class AdminElections extends React.Component<any, any> {
           va_disabled: true
         });
         break;
+      default:
+        this.setState({
+          md_disabled: false,
+          de_disabled: false,
+          nj_disabled: false,
+          pa_disabled: false,
+          va_disabled: false
+        });
     }
   }
 
@@ -445,17 +575,7 @@ export class AdminElections extends React.Component<any, any> {
                   text: "-- Please Select Tax Year --"
                 }}
                 onChange={e => {
-                  if (e.target.value === "-- Please Select Tax Year --") {
-                    this.setState({
-                      ele_taxYear: e.target.value,
-                      ele_taxYear_Error: true
-                    });
-                  } else {
-                    this.setState({
-                      ele_taxYear: e.target.value,
-                      ele_taxYear_Error: false
-                    });
-                  }
+                  this.onTaxYearChange(e)
                 }}
                 error={this.state.ele_taxYear_Error}
                 fullWidth

@@ -131,7 +131,8 @@ export class AdminDelegates extends React.Component<any, any> {
     if (id) {
       let newWeb = new Web(this.state.properties.tenentURL);
       //const filter = "shareholderID eq '" + id + "'";
-      const filter = "shareholderID eq " + id + "'";
+      const filter =
+      "shareholderID eq '" + id + "' and ShareholderType eq 'Delegate'";
       newWeb.lists
         .getByTitle("Shareholdings")
         .items.select(
@@ -154,53 +155,14 @@ export class AdminDelegates extends React.Component<any, any> {
         .get()
         .then(d => {
           if (d.length > 0) {
-            let shareholderObj = [];
-            let delegateObj = [];
-            for (let index = 0; index < d.length; index++) {
-              if (d[index].ShareholderType === "Delegate") {
-                delegateObj.push({
-                  Title: d[index].Title,
-                  ShareholderType: d[index].ShareholderType,
-                  shares: d[index].shares,
-                  shareholderEmail: d[index].shareholderEmail,
-                  shareholderID: d[index].shareholderID,
-                  firstName: d[index].firstName,
-                  lastName: d[index].lastName,
-                  aceessType: d[index].aceessType,
-                  unrestrictedShares: d[index].unrestrictedShares,
-                  restrictedShares: d[index].restrictedShares,
-                  vestedOptions: d[index].vestedOptions,
-                  unvestedOptions: d[index].unvestedOptions,
-                  ID: d[index].ID
-                });
-              } else {
-                shareholderObj.push({
-                  Title: d[index].Title,
-                  ShareholderType: d[index].ShareholderType,
-                  shares: d[index].shares,
-                  shareholderEmail: d[index].shareholderEmail,
-                  shareholderID: d[index].shareholderID,
-                  firstName: d[index].firstName,
-                  lastName: d[index].lastName,
-                  aceessType: d[index].aceessType,
-                  unrestrictedShares: d[index].unrestrictedShares,
-                  restrictedShares: d[index].restrictedShares,
-                  vestedOptions: d[index].vestedOptions,
-                  unvestedOptions: d[index].unvestedOptions,
-                  ID: d[index].ID
-                });
-              }
-            }
             this.setState(prevState => ({
               ...prevState,
-              delegateInformation: delegateObj,
-              shareHoldingInfromation: shareholderObj
+              delegateInformation: d
             }));
           } else {
             this.setState(prevState => ({
               ...prevState,
-              delegateInformation: [],
-              shareHoldingInfromation: []
+              delegateInformation: []
             }));
           }
         });
@@ -324,30 +286,30 @@ export class AdminDelegates extends React.Component<any, any> {
     newWeb.lists
       .getByTitle("Shareholding Delegates Request")
       .items.add({
-        Title: this.state.shareHoldingInfromation[0].Title,
+        Title: this.state.delegateInformation[0].Title,
         shareholderID: this.state.shareholderID,
-        shares: this.state.shareHoldingInfromation[0].shares.toString(),
+        shares: this.state.delegateInformation[0].shares.toString(),
         shareholderEmail: this.state.delegateEmailAddress.toString(),
         ShareholderType:"Delegate",
         unrestrictedShares:
-          this.state.shareHoldingInfromation[0].unrestrictedShares !== null
-            ? this.state.shareHoldingInfromation[0].unrestrictedShares.toString()
+          this.state.delegateInformation[0].unrestrictedShares !== null
+            ? this.state.delegateInformation[0].unrestrictedShares.toString()
             : null,
         restrictedShares:
-          this.state.shareHoldingInfromation[0].restrictedShares.toString !==
+          this.state.delegateInformation[0].restrictedShares.toString !==
           null
-            ? this.state.shareHoldingInfromation[0].restrictedShares.toString()
+            ? this.state.delegateInformation[0].restrictedShares.toString()
             : null,
         vestedOptions:
-          this.state.shareHoldingInfromation[0].vestedOptions !== null
-            ? this.state.shareHoldingInfromation[0].vestedOptions.toString()
+          this.state.delegateInformation[0].vestedOptions !== null
+            ? this.state.delegateInformation[0].vestedOptions.toString()
             : null,
         unvestedOptions:
-          this.state.shareHoldingInfromation[0].unvestedOptions !== null
-            ? this.state.shareHoldingInfromation[0].unvestedOptions.toString()
+          this.state.delegateInformation[0].unvestedOptions !== null
+            ? this.state.delegateInformation[0].unvestedOptions.toString()
             : null,
-        firstName: this.state.deligateName.toString(),
-        lastName: this.state.deligateName.toString(),
+        firstName: this.state.deligateFirstName.toString(),
+        lastName: this.state.deligateLastName.toString(),
         aceessType: this.state.delegateAccess.toString()
       })
       .then(i => {

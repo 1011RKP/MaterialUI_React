@@ -1,4 +1,4 @@
-import { Checkbox, Radio, TextField, Button } from "@material-ui/core";
+import { Checkbox, Radio, TextField, Button, Select } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import { CheckboxProps } from "@material-ui/core/Checkbox";
 import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
@@ -18,6 +18,33 @@ import * as React from "react";
 //   },
 // });
 
+export const CustomSelect = withStyles({
+  root: {
+    "& label": {
+      color: "#976340"
+    },
+    "& label.Mui-focused": {
+      color: "#976340"
+    },
+    "& .MuiInput-underline": {
+      color: "#000"
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#976340"
+    },
+    "& .MuiInput-underline:hover": {
+      borderBottomColor: "#976340"
+    },
+    "&:before": {
+      borderColor: "#976340"
+    },
+    "&:after": {
+      borderColor: "#976340"
+    },
+  }
+
+})(Select);
+
 
 export const CustomTextField = withStyles({
   root: {
@@ -35,7 +62,13 @@ export const CustomTextField = withStyles({
     },
     "& .MuiInput-underline:hover": {
       borderBottomColor: "#976340"
-    }
+    },
+    "&:before": {
+      borderColor: "#976340"
+    },
+    "&:after": {
+      borderColor: "#976340"
+    },
   }
 })(TextField);
 
@@ -58,11 +91,13 @@ export const CustomRadio = withStyles({
     color: "#976340",
     "&$checked": {
       color: "#976340"
-    },
-    "&$disabled": {
-      color: "#d8c1b1"
-    },
-    disabled: {}
+    }
+  },
+  disabled: {
+    color: '#B2B2B4',
+    "&$checked": {
+      color: "#B2B2B4"
+    }
   },
   checked: {}
 })((props: RadioProps) => <Radio color="default" {...props} />);
@@ -74,6 +109,16 @@ export const CustomButton = withStyles(({
     '&:hover': {
       backgroundColor: "#976340",
     },
+    '&$disabled': {
+      background: 'rgba(0, 0, 0, 0.12)',
+      color: 'black',
+      boxShadow: 'none',
+    },
+  },
+  disabled: {
+    background: '#B2B2B4',
+    color: '#777777',
+    boxShadow: 'none',
   },
 }))(Button);
 
