@@ -11,13 +11,6 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { IPivotStyles } from "office-ui-fabric-react";
 import * as React from "react";
 
-// export const theme = createMuiTheme({
-//   palette: {
-//     primary: { main: "green" }, // Purple and green play nicely together.
-//     secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
-//   },
-// });
-
 export const CustomSelect = withStyles({
   root: {
     "& label": {
@@ -48,27 +41,48 @@ export const CustomSelect = withStyles({
 
 export const CustomTextField = withStyles({
   root: {
-    "& label": {
-      color: "#976340"
+    '& .MuiInputBase-input':{
+      zIndex:-1,
+      color: '#976340',
+      borderColor: '#976340',
     },
-    "& label.Mui-focused": {
-      color: "#976340"
+    '& .MuiInputBase-input:focus':{
+      color: '#976340',
+      borderColor: '#976340',
     },
-    "& .MuiInput-underline": {
-      color: "#000"
+    '& .MuiInputLabel-animated':{
+      color: '#976340',
     },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#976340"
+    '& .MuiInputBase-input:hover':{
+      color: '#976340',
+      borderColor: '#976340',
     },
-    "& .MuiInput-underline:hover": {
-      borderBottomColor: "#976340"
+    '& .MuiTextField-root':{
+      color: '#976340',
+      zIndex:1
     },
-    "&:before": {
-      borderColor: "#976340"
+    '& label.MuiTextField-root':{
+      color: '#976340',
+      zIndex:1
     },
-    "&:after": {
-      borderColor: "#976340"
+    '& label.Mui-focused': {
+      color: '#976340',
     },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#976340',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#976340',
+      },
+      '&:hover fieldset': {
+        borderColor: '#976340',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#976340',
+      },
+    },
+    focused: {color: '#976340',},
   }
 })(TextField);
 

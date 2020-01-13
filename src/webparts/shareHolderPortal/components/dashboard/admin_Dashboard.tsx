@@ -36,6 +36,7 @@ export class AdminDashBoard extends React.Component<any, any> {
     this.state = {
       properties: this.props.properties,
       totalSharesOwned: 0,
+      totalOptions:0,
       shareholdingsCollection: [],
       eventCollection: [],
       DocCollection: [],
@@ -54,7 +55,8 @@ export class AdminDashBoard extends React.Component<any, any> {
         this.props.properties.tenentURL +
         "/ShareholdingStockDistributions/Allitemsg.aspx",
       sortShareholderID: "NA", //desc
-      sortShares: "NA"
+      sortShares: "NA",
+      sortOptions: "NA"
     };
   }
 
@@ -85,22 +87,25 @@ export class AdminDashBoard extends React.Component<any, any> {
         "restrictedShares",
         "ShareholderType"
       )
-      .orderBy("Title", true)
-      .top(3)
+      .orderBy("ID", true)
+      //.top(3)
       .get()
       .then(d => {
         if (d.length > 0) {
           let totalShares = 0;
+          let totalOptions = 0;
           this.setState(prevState => ({
             ...prevState,
             shareholdingsCollection: d
           }));
-          for (let index = 0; index <= 2; index++) {
+          for (let index = 0; index <= d.length; index++) {
             totalShares += parseFloat(d[index].shares.replace(/,/g, ""));
+            totalOptions += parseFloat(d[index].options.replace(/,/g, ""));
           }
           this.setState(prevState => ({
             ...prevState,
-            totalSharesOwned: totalShares.toLocaleString()
+            totalSharesOwned: totalShares.toLocaleString(),
+            totalOptions:totalOptions.toLocaleString()
           }));
         }
       });
@@ -108,9 +113,18 @@ export class AdminDashBoard extends React.Component<any, any> {
 
   public getAnnouncements(newWeb): any {
     newWeb.lists
-      .getByTitle("Shareholding Events")
-      .items.select("Title", "date", "details", "ID", "Modified", "Created")
-      .orderBy("date", true)
+      .getByTitle("Shareholding Announcements")
+      .items.select(
+        "Title",
+        "date",
+        "details",
+        "ID",
+        "Expire",
+        "Modified",
+        "Created"
+      )
+      .filter("Expire eq 'No'")
+      .orderBy("date", false)
       .get()
       .then(d => {
         if (d.length > 0) {
@@ -124,9 +138,18 @@ export class AdminDashBoard extends React.Component<any, any> {
 
   public getEvents(newWeb) {
     newWeb.lists
-      .getByTitle("Shareholding Announcements")
-      .items.select("Title", "date", "details", "ID", "Modified", "Created")
-      .orderBy("date", true)
+      .getByTitle("Shareholding Events")
+      .items.select(
+        "Title",
+        "date",
+        "details",
+        "ID",
+        "Expire",
+        "Modified",
+        "Created"
+      )
+      .filter("Expire eq 'No'")
+      .orderBy("date", false)
       .get()
       .then(d => {
         if (d.length > 0) {
@@ -141,8 +164,8 @@ export class AdminDashBoard extends React.Component<any, any> {
   public getShareholdingStockDistributions(newWeb) {
     newWeb.lists
       .getByTitle("Shareholding Stock Distributions")
-      .items.select("Title", "Quarter", "YTD", "ID")
-      .orderBy("ID", true)
+      .items.select("Title", "Quarter", "YTD", "ID", "Date")
+      .orderBy("Date", false)
       .get()
       .then(d => {
         if (d.length > 0) {
@@ -165,11 +188,13 @@ export class AdminDashBoard extends React.Component<any, any> {
         "Modified",
         "Created"
       )
-      .orderBy("Title", true)
+      .orderBy("Created", false)
       //.filter("AccountID eq '" + id + "'")
+      .top(10)
       .get()
       .then(d => {
         if (d.length > 0) {
+          console.log(d);
           this.setState(prevState => ({
             ...prevState,
             DocCollection: d
@@ -199,6 +224,21 @@ export class AdminDashBoard extends React.Component<any, any> {
         }
         break;
       case "options":
+        if (sortType === "asc" || sortType === "NA") {
+          var sortCol = this.state.shareholdingsCollection;
+          sortCol = _.orderBy(sortCol, column, sortType);
+          this.setState({
+            shareholdingsCollection: sortCol,
+            sortOptions: "desc"
+          });
+        } else {
+          var sortCol = this.state.shareholdingsCollection;
+          sortCol = _.orderBy(sortCol, column, sortType);
+          this.setState({
+            shareholdingsCollection: sortCol,
+            sortOptions: "asc"
+          });
+        }
         break;
       case "shares":
         if (sortType === "asc" || sortType === "NA") {
@@ -252,7 +292,7 @@ export class AdminDashBoard extends React.Component<any, any> {
                                 </TableCell>
                                 <TableCell
                                   className={styles.tblCell}
-                                  align="right"
+                                  align="left"
                                 >
                                   <a
                                     style={{ cursor: "pointer" }}
@@ -276,7 +316,24 @@ export class AdminDashBoard extends React.Component<any, any> {
                                   className={styles.tblCell}
                                   align="right"
                                 >
-                                  Option
+                                  <a
+                                    style={{ cursor: "pointer" }}
+                                    onClick={e => {
+                                      this.handleSort(
+                                        this.state.sortOptions,
+                                        "options"
+                                      );
+                                    }}
+                                  >
+                                    {this.state.sortOptions === "asc" ? (
+                                      <ArrowUpwardIcon />
+                                    ) : null}
+                                    {this.state.sortOptions === "desc" ? (
+                                      <ArrowDownwardIcon />
+                                    ) : null}
+                                    Option
+                                  </a>
+
                                 </TableCell>
                                 <TableCell
                                   className={styles.tblCell}
@@ -323,7 +380,7 @@ export class AdminDashBoard extends React.Component<any, any> {
                                             View Details
                                           </Link>
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell align="left">
                                           {shareholdings.shareholderID}
                                         </TableCell>
                                         <TableCell align="right">
@@ -338,14 +395,30 @@ export class AdminDashBoard extends React.Component<any, any> {
                                     );
                                 }
                               )}
-                              <TableRow key="001">
+                              <TableRow key="01">
                                 <TableCell
                                   component="th"
                                   scope="row"
-                                  colSpan={3}
                                 >
                                   Total Shares Owned:
                                   {this.state.totalSharesOwned}
+                                </TableCell>
+                                <TableCell
+                                  component="th"
+                                  scope="row"
+                                >
+                                  Total Options Owned:
+                                  {this.state.totalOptions}
+                                </TableCell>
+                                <TableCell
+                                  component="th"
+                                  scope="row"
+                                >
+                                  {this.state.shareholdingsCollection.length >= 2 ? (<React.Fragment>
+                                  Showing 3 of : {" "}{this.state.shareholdingsCollection.length}
+                                  </React.Fragment>) :(<React.Fragment>
+                                    Showing {this.state.shareholdingsCollection.length} of :{" "}{this.state.shareholdingsCollection.length}
+                                  </React.Fragment>)}
                                 </TableCell>
                                 <TableCell
                                   component="th"

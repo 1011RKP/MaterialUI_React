@@ -32,7 +32,11 @@ export class DashBoard extends React.Component<any, any> {
       stockDistributions: [],
       tenentURL: this.props.properties.tenentURL,
       accountEmail: this.props.properties.accountEmail,
-      totalSharesOwned: 0
+      totalSharesOwned: 0,
+      totalOptions:0,
+      sortShareholderID: "NA", //desc
+      sortShares: "NA",
+      sortOptions: "NA"
     };
   }
 
@@ -68,19 +72,18 @@ export class DashBoard extends React.Component<any, any> {
       .get()
       .then(d => {
         if (d.length > 0) {
-          let totalShares = 0; let totalLength = 0;
-          if (d.length <= 2) {
-            totalLength = d.length;
-          } else {
-            totalLength = 3;
-          }
-          for (let index = 0; index < totalLength; index++) {
+          let totalShares = 0;
+          let totalOptions = 0;
+          for (let index = 0; index <= d.length; index++) {
             totalShares += parseFloat(d[index].shares.replace(/,/g, ""));
+            totalOptions += parseFloat(d[index].options.replace(/,/g, ""));
           }
+
           this.setState(prevState => ({
             ...prevState,
             shareholdingsCollection: d,
-            totalSharesOwned: totalShares.toLocaleString()
+            totalSharesOwned: totalShares.toLocaleString(),
+            totalOptions:totalOptions.toLocaleString()
           }));
         } else {
           this.setState(prevState => ({
@@ -97,9 +100,18 @@ export class DashBoard extends React.Component<any, any> {
 
   public getAnnouncements = (newWeb: any) => {
     newWeb.lists
-      .getByTitle("Shareholding Events")
-      .items.select("Title", "date", "details", "ID", "Modified", "Created")
-      .orderBy("date", true)
+      .getByTitle("Shareholding Announcements")
+      .items.select(
+        "Title",
+        "date",
+        "details",
+        "ID",
+        "Expire",
+        "Modified",
+        "Created"
+      )
+      .filter("Expire eq 'No'")
+      .orderBy("date", false)
       .get()
       .then(d => {
         if (d.length > 0) {
@@ -113,9 +125,18 @@ export class DashBoard extends React.Component<any, any> {
 
   public getEvents = newWeb => {
     newWeb.lists
-      .getByTitle("Shareholding Announcements")
-      .items.select("Title", "date", "details", "ID", "Modified", "Created")
-      .orderBy("date", true)
+      .getByTitle("Shareholding Events")
+      .items.select(
+        "Title",
+        "date",
+        "details",
+        "ID",
+        "Expire",
+        "Modified",
+        "Created"
+      )
+      .filter("Expire eq 'No'")
+      .orderBy("date", false)
       .get()
       .then(d => {
         if (d.length > 0) {
@@ -130,8 +151,8 @@ export class DashBoard extends React.Component<any, any> {
   public getShareholdingStockDistributions = newWeb => {
     newWeb.lists
       .getByTitle("Shareholding Stock Distributions")
-      .items.select("Title", "Quarter", "YTD", "ID")
-      .orderBy("ID", true)
+      .items.select("Title", "Quarter", "YTD", "ID", "Date")
+      .orderBy("Date", false)
       .get()
       .then(d => {
         if (d.length > 0) {
@@ -154,10 +175,11 @@ export class DashBoard extends React.Component<any, any> {
         "Modified",
         "Created"
       )
-      .orderBy("Title", true)
-      //.filter("AccountID eq '" + id + "'")
+      .orderBy("Created", false)
+      .top(10)
       .get()
       .then(d => {
+        console.log(d);
         if (d.length > 0) {
           this.setState(prevState => ({
             ...prevState,
@@ -187,8 +209,23 @@ export class DashBoard extends React.Component<any, any> {
           });
         }
         break;
-      case "options":
-        break;
+        case "options":
+          if (sortType === "asc" || sortType === "NA") {
+            var sortCol = this.state.shareholdingsCollection;
+            sortCol = _.orderBy(sortCol, column, sortType);
+            this.setState({
+              shareholdingsCollection: sortCol,
+              sortOptions: "desc"
+            });
+          } else {
+            var sortCol = this.state.shareholdingsCollection;
+            sortCol = _.orderBy(sortCol, column, sortType);
+            this.setState({
+              shareholdingsCollection: sortCol,
+              sortOptions: "asc"
+            });
+          }
+          break;
       case "shares":
         if (sortType === "asc" || sortType === "NA") {
           var sortCol = this.state.shareholdingsCollection;
@@ -241,7 +278,7 @@ export class DashBoard extends React.Component<any, any> {
                                 </TableCell>
                                 <TableCell
                                   className={styles.tblCell}
-                                  align="right"
+                                  align="left"
                                 >
                                   <a
                                     style={{ cursor: "pointer" }}
@@ -265,7 +302,23 @@ export class DashBoard extends React.Component<any, any> {
                                   className={styles.tblCell}
                                   align="right"
                                 >
-                                  Option
+                                  <a
+                                    style={{ cursor: "pointer" }}
+                                    onClick={e => {
+                                      this.handleSort(
+                                        this.state.sortOptions,
+                                        "options"
+                                      );
+                                    }}
+                                  >
+                                    {this.state.sortOptions === "asc" ? (
+                                      <ArrowUpwardIcon />
+                                    ) : null}
+                                    {this.state.sortOptions === "desc" ? (
+                                      <ArrowDownwardIcon />
+                                    ) : null}
+                                    Option
+                                  </a>
                                 </TableCell>
                                 <TableCell
                                   className={styles.tblCell}
@@ -312,7 +365,7 @@ export class DashBoard extends React.Component<any, any> {
                                             View Details
                                           </Link>
                                         </TableCell>
-                                        <TableCell align="right">
+                                        <TableCell align="left">
                                           {shareholdings.shareholderID}
                                         </TableCell>
                                         <TableCell align="right">
@@ -327,14 +380,39 @@ export class DashBoard extends React.Component<any, any> {
                                     );
                                 }
                               )}
-                              <TableRow key="001">
-                                <TableCell
-                                  component="th"
-                                  scope="row"
-                                  colSpan={3}
-                                >
+                              <TableRow key="01">
+                                <TableCell component="th" scope="row">
                                   Total Shares Owned:
                                   {this.state.totalSharesOwned}
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                  Total Options Owned:
+                                  {this.state.totalOptions}
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                  {this.state.shareholdingsCollection.length >=
+                                  2 ? (
+                                    <React.Fragment>
+                                      Showing 3 of : {" "}
+                                      {
+                                        this.state.shareholdingsCollection
+                                          .length
+                                      }
+                                    </React.Fragment>
+                                  ) : (
+                                    <React.Fragment>
+                                      Showing{" "}
+                                      {
+                                        this.state.shareholdingsCollection
+                                          .length
+                                      }{" "}
+                                      of :{" "}
+                                      {
+                                        this.state.shareholdingsCollection
+                                          .length
+                                      }
+                                    </React.Fragment>
+                                  )}
                                 </TableCell>
                                 <TableCell
                                   component="th"
@@ -512,32 +590,34 @@ export class DashBoard extends React.Component<any, any> {
                         <Paper>
                           <Table aria-label="simple table">
                             <TableBody>
-                              {this.state.DocCollection.map(doc => (
-                                <TableRow key={doc.ID}>
-                                  <TableCell component="th" scope="doc">
-                                    <a
-                                      className={styles.docLink}
-                                      target="_blank"
-                                      href={doc.EncodedAbsUrl}
-                                    >
-                                      <FontAwesomeIcon
-                                        style={{
-                                          marginLeft: "3px",
-                                          color: "#dc4848",
-                                          fontSize: "20px"
-                                        }}
-                                        icon={faFilePdf}
-                                      />{" "}
-                                      {doc.BaseName}
-                                    </a>
-                                  </TableCell>
-                                  <TableCell align="right">
-                                    <Moment format="MMMM, Do, YYYY">
-                                      {doc.Created}
-                                    </Moment>
-                                  </TableCell>
-                                </TableRow>
-                              ))}
+                              {this.state.DocCollection.map((doc, index) => {
+                                  return (
+                                    <TableRow key={doc.ID}>
+                                      <TableCell component="th" scope="doc">
+                                        <a
+                                          className={styles.docLink}
+                                          target="_blank"
+                                          href={doc.EncodedAbsUrl}
+                                        >
+                                          <FontAwesomeIcon
+                                            style={{
+                                              marginLeft: "3px",
+                                              color: "#dc4848",
+                                              fontSize: "20px"
+                                            }}
+                                            icon={faFilePdf}
+                                          />{" "}
+                                          {doc.BaseName}
+                                        </a>
+                                      </TableCell>
+                                      <TableCell align="right">
+                                        <Moment format="MMMM, Do, YYYY">
+                                          {doc.Created}
+                                        </Moment>
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                              })}
                             </TableBody>
                           </Table>
                         </Paper>
@@ -568,9 +648,18 @@ export class DashBoard extends React.Component<any, any> {
                                   color: "#fff"
                                 }}
                               >
-                                <TableCell> Event</TableCell>
-                                <TableCell> Quarter</TableCell>
-                                <TableCell> YTD</TableCell>
+                                <TableCell className={styles.stockTbleHeadCell}>
+                                  {" "}
+                                  Event
+                                </TableCell>
+                                <TableCell className={styles.stockTbleHeadCell}>
+                                  {" "}
+                                  Quarter
+                                </TableCell>
+                                <TableCell className={styles.stockTbleHeadCell}>
+                                  {" "}
+                                  YTD
+                                </TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
