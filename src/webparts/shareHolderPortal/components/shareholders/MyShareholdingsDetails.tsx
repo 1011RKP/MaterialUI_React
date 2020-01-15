@@ -78,6 +78,7 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
             this.setState({
               ShareholdingsCol: d[0],
               isDeligate:true,
+              shareholdingName: d[0].Title
             });
           } else {
             this.setState({
@@ -271,8 +272,8 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
       <div>
         {this.state.shareholderID !== undefined &&
         this.state.shareholderID !== null &&
-        this.state.shareholderEmail !== undefined &&
-        this.state.shareholderEmail !== null ? (
+        this.state.shareholdingName !== undefined &&
+        this.state.shareholdingName !== null ? (
           <React.Fragment>
             <AppBar position="static" style={{ background: "#eeeeee" }}>
               {information_HTML}
@@ -296,7 +297,8 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
                 <AccountInformation
                   properties={{
                     tenentURL: this.state.properties.tenentURL,
-                    shareholderID: this.state.shareholderID
+                    shareholderID: this.state.shareholderID,
+                    shareholdingName: this.state.shareholdingName
                   }}
                 />
               </TabPanel>
@@ -304,7 +306,8 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
                 <Elections
                   properties={{
                     tenentURL: this.state.properties.tenentURL,
-                    shareholderID: this.state.shareholderID
+                    shareholderID: this.state.shareholderID,
+                    shareholdingName: this.state.shareholdingName
                   }}
                 />
               </TabPanel>
@@ -312,7 +315,8 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
                 <Delegates
                   properties={{
                     tenentURL: this.state.properties.tenentURL,
-                    shareholderID: this.state.shareholderID
+                    shareholderID: this.state.shareholderID,
+                    shareholdingName: this.state.shareholdingName
                   }}
                 />
               </TabPanel>
@@ -320,7 +324,8 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
                 <OtherInformation
                   properties={{
                     tenentURL: this.state.properties.tenentURL,
-                    shareholderID: this.state.shareholderID
+                    shareholderID: this.state.shareholderID,
+                    shareholdingName: this.state.shareholdingName
                   }}
                 />
               </TabPanel>
@@ -328,7 +333,8 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
                 <Documents
                   properties={{
                     tenentURL: this.state.properties.tenentURL,
-                    shareholderID: this.state.shareholderID
+                    shareholderID: this.state.shareholderID,
+                    shareholdingName: this.state.shareholdingName
                   }}
                 />
               </TabPanel>

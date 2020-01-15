@@ -9,7 +9,8 @@ import {
   InputLabel,
   MenuItem,
   RadioGroup,
-  Select
+  Select,
+  TextField
 } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -72,8 +73,8 @@ export class AdminOtherInformation extends React.Component<any, any> {
       dateBecameVestedSCorpShareholder: moment(new Date()).format("MM/DD/YYYY"),
       dateBecameShareholder: moment(new Date()).format("MM/DD/YYYY"),
       dateBecameShareholder_Error: false,
-      dateCeasedToBeAShareholder: moment(new Date()).format("MM/DD/YYYY"),
-      callRightDate: moment(new Date()).format("MM/DD/YYYY"),
+      dateCeasedToBeAShareholder: null,
+      callRightDate: null,
       shareholderAgreement: "NA",
       shareholderAgreement_Error: false,
       accreditedInvestor: "",
@@ -88,8 +89,17 @@ export class AdminOtherInformation extends React.Component<any, any> {
       CEOGroup: "NA",
       CEOGroup_Error: false,
       shareholderAgreementTypes: [],
+      ceoReportGroupTypes:[],
+      mdaGroupTypes:[],
+      proxyGroupTypes:[],
       shareholderAgreementLink:
-        this.props.properties.tenentURL + "ShareholderAgreement/Allitemsg.aspx"
+        this.props.properties.tenentURL + "ShareholderAgreement/Allitemsg.aspx",
+        mdaGroupLink:
+        this.props.properties.tenentURL + "MDAGroup/Allitemsg.aspx",
+        proxyGroupLink:
+        this.props.properties.tenentURL + "ProxyGroup/Allitemsg.aspx",
+        ceoReportGroupLink:
+        this.props.properties.tenentURL + "CEOReportGroup/Allitemsg.aspx",
     };
   }
 
@@ -131,6 +141,9 @@ export class AdminOtherInformation extends React.Component<any, any> {
     if (this.state.shareholderID !== undefined) {
       this.getOtherInformation(this.state.shareholderID);
       this.ShareholderAgreementTypes();
+      this.CEOReportGroupTypes();
+      this.MDAGroup();
+      this.ProxyGroup();
     }
   }
 
@@ -145,7 +158,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
           let obj = [
             {
               key: "NA",
-              text: "-- Please Select Tax Year --"
+              text: "-- Please Select Shareholder Agreement --"
             }
           ];
           for (let index = 0; index < d.length; index++) {
@@ -156,6 +169,87 @@ export class AdminOtherInformation extends React.Component<any, any> {
           }
           this.setState({
             shareholderAgreementTypes: obj
+          });
+        }
+      });
+  }
+
+  public CEOReportGroupTypes = () => {
+    let newWeb = new Web(this.state.properties.tenentURL);
+    newWeb.lists
+      .getByTitle("CEO Report Group")
+      .items.select("Title", "ID", "fullName")
+      .get()
+      .then(d => {
+        if (d.length > 0) {
+          let obj = [
+            {
+              key: "NA",
+              text: "-- Please CEO Report Group --"
+            }
+          ];
+          for (let index = 0; index < d.length; index++) {
+            obj.push({
+              key: d[index].Title,
+              text: d[index].fullName
+            });
+          }
+          this.setState({
+            ceoReportGroupTypes: obj
+          });
+        }
+      });
+  }
+
+  public MDAGroup = () => {
+    let newWeb = new Web(this.state.properties.tenentURL);
+    newWeb.lists
+      .getByTitle("MDA Group")
+      .items.select("Title", "ID", "fullName")
+      .get()
+      .then(d => {
+        if (d.length > 0) {
+          let obj = [
+            {
+              key: "NA",
+              text: "-- Please Select MDA Group --"
+            }
+          ];
+          for (let index = 0; index < d.length; index++) {
+            obj.push({
+              key: d[index].Title,
+              text: d[index].fullName
+            });
+          }
+          this.setState({
+            mdaGroupTypes: obj
+          });
+        }
+      });
+  }
+
+  public ProxyGroup = () => {
+    let newWeb = new Web(this.state.properties.tenentURL);
+    newWeb.lists
+      .getByTitle("Proxy Group")
+      .items.select("Title", "ID", "fullName")
+      .get()
+      .then(d => {
+        if (d.length > 0) {
+          let obj = [
+            {
+              key: "NA",
+              text: "-- Please Proxy Group --"
+            }
+          ];
+          for (let index = 0; index < d.length; index++) {
+            obj.push({
+              key: d[index].Title,
+              text: d[index].fullName
+            });
+          }
+          this.setState({
+            proxyGroupTypes: obj
           });
         }
       });
@@ -209,7 +303,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                   : moment(d[0].dateBecameShareholder).format("MM/DD/YYYY"),
               dateCeasedToBeAShareholder:
                 d[0].dateCeasedToBeaShareholder === null
-                  ? moment(new Date()).format("MM/DD/YYYY")
+                  ? null
                   : moment(d[0].dateCeasedToBeaShareholder).format(
                       "MM/DD/YYYY"
                     ),
@@ -220,7 +314,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
               callRightNo: d[0].callRightNo,
               callRightDate:
                 d[0].callRightDate === null
-                  ? moment(new Date()).format("MM/DD/YYYY")
+                  ? null
                   : moment(d[0].callRightDate).format("MM/DD/YYYY"),
               accreditedInvestor: d[0].accreditedInvestor,
               proxyGroup: d[0].proxyGroup === null ? "NA" : d[0].proxyGroup,
@@ -431,7 +525,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
               <div className="row">
                 <div className="col-md-12">
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <CustomTextField
+                    <TextField
                       label="Date Became Vested SCorp Shareholder"
                       name="dateBecameVestedSCorpShareholder"
                       value={this.state.dateBecameVestedSCorpShareholder}
@@ -454,7 +548,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     />
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <CustomTextField
+                    <TextField
                       label="Date Became Shareholder"
                       name="dateBecameShareholder"
                       value={this.state.dateBecameShareholder}
@@ -482,7 +576,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     />
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <CustomTextField
+                    <TextField
                       label="Date Ceased To Be A Shareholder"
                       name="dateCeasedToBeAShareholder"
                       value={this.state.dateCeasedToBeAShareholder}
@@ -578,7 +672,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     </div>
                   </div>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <CustomTextField
+                    <TextField
                       label="Call Right No"
                       onChange={e => {
                         const re = /^[0-9\b]+$/;
@@ -595,7 +689,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     />
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <CustomTextField
+                    <TextField
                       label="Call Right Date"
                       name="callRightDate"
                       value={this.state.callRightDate}
@@ -745,7 +839,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
             </div>
             <div className="row-fluid">
               <div className="row">
-                <div className="col-sm-12">
+                <div className="col-sm-11">
                   <FormControl
                     error={this.state.mdaGroup_Error}
                     fullWidth
@@ -753,8 +847,11 @@ export class AdminOtherInformation extends React.Component<any, any> {
                   >
                     <InputLabel
                       style={{
-                        color: this.state.mdaGroup_Error !== true ? "#976340" : "red",
-                        marginLeft: "15px",
+                        color:
+                          this.state.mdaGroup_Error !== true
+                            ? "#976340"
+                            : "red",
+                        marginLeft: "15px"
                       }}
                       error={this.state.mdaGroup_Error}
                     >
@@ -779,7 +876,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                       error={this.state.mdaGroup_Error}
                       fullWidth
                     >
-                      {this.MDAGroupDD.map((item, i) => {
+                      {this.state.mdaGroupTypes.map((item, i) => {
                         return (
                           <MenuItem key={i} value={item.key}>
                             {item.text}
@@ -793,6 +890,23 @@ export class AdminOtherInformation extends React.Component<any, any> {
                       false
                     )}
                   </FormControl>
+                </div>
+                <div className="col-sm-1">
+                  <a href={this.state.mdaGroupLink} target="_blank">
+                    <FontAwesomeIcon
+                      style={{
+                        marginLeft: "3px",
+                        color: "#007bff",
+                        fontSize: "14px",
+                        marginTop: "40"
+                      }}
+                      icon={faExternalLinkAlt}
+                    />
+                  </a>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-11">
                   <FormControl
                     error={this.state.proxyGroup_Error}
                     fullWidth
@@ -801,7 +915,10 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     <InputLabel
                       style={{
                         marginLeft: "15px",
-                        color: this.state.proxyGroup_Error !== true ? "#976340" : "red"
+                        color:
+                          this.state.proxyGroup_Error !== true
+                            ? "#976340"
+                            : "red"
                       }}
                     >
                       Proxy Group
@@ -825,7 +942,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                       error={this.state.proxyGroup_Error}
                       fullWidth
                     >
-                      {this.ProxyGroupDD.map((item, i) => {
+                      {this.state.proxyGroupTypes.map((item, i) => {
                         return (
                           <MenuItem key={i} value={item.key}>
                             {item.text}
@@ -839,6 +956,23 @@ export class AdminOtherInformation extends React.Component<any, any> {
                       false
                     )}
                   </FormControl>
+                </div>
+                <div className="col-sm-1">
+                  <a href={this.state.proxyGroupLink} target="_blank">
+                    <FontAwesomeIcon
+                      style={{
+                        marginLeft: "3px",
+                        color: "#007bff",
+                        fontSize: "14px",
+                        marginTop: "40"
+                      }}
+                      icon={faExternalLinkAlt}
+                    />
+                  </a>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-11">
                   <FormControl
                     error={this.state.CEOGroup_Error}
                     fullWidth
@@ -847,7 +981,8 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     <InputLabel
                       style={{
                         marginLeft: "15px",
-                        color: this.state.CEOGroup_Error !== true ? "#976340" : "red"
+                        color:
+                          this.state.CEOGroup_Error !== true ? "#976340" : "red"
                       }}
                     >
                       CEO Report Group
@@ -871,7 +1006,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                       error={this.state.CEOGroup_Error}
                       fullWidth
                     >
-                      {this.CEOGroupDD.map((item, i) => {
+                      {this.state.ceoReportGroupTypes.map((item, i) => {
                         return (
                           <MenuItem key={i} value={item.key}>
                             {item.text}
@@ -887,6 +1022,19 @@ export class AdminOtherInformation extends React.Component<any, any> {
                       false
                     )}
                   </FormControl>
+                </div>
+                <div className="col-sm-1">
+                  <a href={this.state.ceoReportGroupLink} target="_blank">
+                    <FontAwesomeIcon
+                      style={{
+                        marginLeft: "3px",
+                        color: "#007bff",
+                        fontSize: "14px",
+                        marginTop: "40"
+                      }}
+                      icon={faExternalLinkAlt}
+                    />
+                  </a>
                 </div>
               </div>
             </div>
@@ -957,7 +1105,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     )}
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <CustomTextField
+                    <TextField
                       label="Dividend Payment Account"
                       onChange={e => {
                         if (e.target.value === "") {
@@ -1031,7 +1179,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     )}
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <CustomTextField
+                    <TextField
                       disabled={false}
                       label="Tax Distribution Payment Account"
                       name="taxDistributionPaymentAccount"

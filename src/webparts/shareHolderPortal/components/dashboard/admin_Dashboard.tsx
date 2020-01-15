@@ -92,20 +92,32 @@ export class AdminDashBoard extends React.Component<any, any> {
       .get()
       .then(d => {
         if (d.length > 0) {
+          let unique = [];
+          unique = _.uniqBy(d, e => {
+            return e.shareholderID;
+          });
           let totalShares = 0;
           let totalOptions = 0;
           this.setState(prevState => ({
             ...prevState,
-            shareholdingsCollection: d
+            shareholdingsCollection: unique
           }));
-          for (let index = 0; index <= d.length; index++) {
-            totalShares += parseFloat(d[index].shares.replace(/,/g, ""));
-            totalOptions += parseFloat(d[index].options.replace(/,/g, ""));
+          for (let index = 0; index < unique.length; index++) {
+            totalShares += parseFloat(unique[index].shares.replace(/,/g, ""));
+            totalOptions += parseFloat(unique[index].options.replace(/,/g, ""));
           }
+          let s = (totalShares.toString()).slice(0, ((totalShares.toString()).indexOf("."))+3);
+          let o = (totalOptions.toString()).slice(0, ((totalOptions.toString()).indexOf("."))+3);
           this.setState(prevState => ({
             ...prevState,
-            totalSharesOwned: totalShares.toLocaleString(),
-            totalOptions:totalOptions.toLocaleString()
+            totalSharesOwned: Number(s),
+            totalOptions:Number(o)
+          }));
+        }
+        else {
+          this.setState(prevState => ({
+            ...prevState,
+            shareholdingsCollection: []
           }));
         }
       });
@@ -386,10 +398,27 @@ export class AdminDashBoard extends React.Component<any, any> {
                                         <TableCell align="right">
                                           {shareholdings.options === 0
                                             ? "-"
-                                            : Math.trunc(shareholdings.options)}
+                                            : shareholdings.options
+                                                .toString()
+                                                .slice(
+                                                  0,
+                                                  shareholdings.options
+                                                    .toString()
+                                                    .indexOf(".") + 3
+                                                )
+                                          //  Math.trunc(shareholdings.options)
+                                          }
                                         </TableCell>
                                         <TableCell align="right">
-                                          {Math.trunc(shareholdings.shares)}
+                                          {shareholdings.shares
+                                            .toString()
+                                            .slice(
+                                              0,
+                                              shareholdings.shares
+                                                .toString()
+                                                .indexOf(".") + 3
+                                            )}
+                                          {/* {Math.trunc(shareholdings.shares)} */}
                                         </TableCell>
                                       </TableRow>
                                     );
@@ -415,9 +444,9 @@ export class AdminDashBoard extends React.Component<any, any> {
                                   scope="row"
                                 >
                                   {this.state.shareholdingsCollection.length >= 2 ? (<React.Fragment>
-                                  Showing 3 of : {" "}{this.state.shareholdingsCollection.length}
+                                  Showing 1 to 3 of {" "}{this.state.shareholdingsCollection.length}
                                   </React.Fragment>) :(<React.Fragment>
-                                    Showing {this.state.shareholdingsCollection.length} of :{" "}{this.state.shareholdingsCollection.length}
+                                    Showing All
                                   </React.Fragment>)}
                                 </TableCell>
                                 <TableCell

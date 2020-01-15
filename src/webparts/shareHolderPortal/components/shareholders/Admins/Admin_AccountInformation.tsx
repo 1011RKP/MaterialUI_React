@@ -10,7 +10,8 @@ import {
   MenuItem,
   Paper,
   RadioGroup,
-  Select
+  Select,
+  TextField
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -29,9 +30,11 @@ import {
   CustomRadio,
   CustomTextField,
   priorityMailingMethod,
-  state_DD
+  state_DD,
+  outerTheme
 } from "../../common/common";
 import styles from "../shareholders.module.scss";
+import { ThemeProvider } from "@material-ui/styles";
 SPComponentLoader.loadCss(
   "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 );
@@ -338,10 +341,10 @@ export class AdminAccountInformation extends React.Component<any, any> {
         trustType: this.state.trustType.toString(),
         scorpFamily: this.state.scorpFamily.toString(),
         documentMailingLabelAddressee1: this.state.documentMailingLabelAddressee1.toString(),
-        documentMailingLabelAddressee2: this.state.documentMailingLabelAddressee2.toString(),
-        documentMailingLabelAddressee3: this.state.documentMailingLabelAddressee3.toString(),
+        documentMailingLabelAddressee2: this.state.documentMailingLabelAddressee2 !== "" ? this.state.documentMailingLabelAddressee2.toString() : null,
+        documentMailingLabelAddressee3: this.state.documentMailingLabelAddressee3 !== "" ? this.state.documentMailingLabelAddressee3.toString() : null,
         documentMailingAddressLine1: this.state.documentMailingAddressLine1.toString(),
-        documentMailingAddressLine2: this.state.documentMailingAddressLine2.toString(),
+        documentMailingAddressLine2: this.state.documentMailingAddressLine2 !== "" ? this.state.documentMailingAddressLine2.toString() : null,
         documentMailingCity: this.state.documentMailingCity.toString(),
         documentMailingState: this.state.documentMailingState.toString(),
         documentMailingZip:
@@ -350,7 +353,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
           this.state.documentMailingZip1.toString(),
         documentMailingPriorityMailingMe: this.state.documentMailingPriorityMailingMethod.toString(),
         permanentTaxAddressLine1: this.state.permanentTaxAddressLine1.toString(),
-        permanentTaxAddressLine2: this.state.permanentTaxAddressLine2.toString(),
+        permanentTaxAddressLine2: this.state.permanentTaxAddressLine2 !== "" ?this.state.permanentTaxAddressLine2.toString() : null,
         permanentTaxCity: this.state.permanentTaxCity.toString(),
         permanentTaxState: this.state.permanentTaxState.toString(),
         permanentTaxZip:
@@ -395,25 +398,25 @@ export class AdminAccountInformation extends React.Component<any, any> {
         trustType: this.state.trustType.toString(),
         scorpFamily: this.state.scorpFamily.toString(),
         documentMailingLabelAddressee1: this.state.documentMailingLabelAddressee1.toString(),
-        documentMailingLabelAddressee2: this.state.documentMailingLabelAddressee2.toString(),
-        documentMailingLabelAddressee3: this.state.documentMailingLabelAddressee3.toString(),
+        documentMailingLabelAddressee2: this.state.documentMailingLabelAddressee2 !== "" ? this.state.documentMailingLabelAddressee2.toString() : null,
+        documentMailingLabelAddressee3: this.state.documentMailingLabelAddressee3 !== "" ? this.state.documentMailingLabelAddressee3.toString() : null,
         documentMailingAddressLine1: this.state.documentMailingAddressLine1.toString(),
-        documentMailingAddressLine2: this.state.documentMailingAddressLine2.toString(),
+        documentMailingAddressLine2: this.state.documentMailingAddressLine2 !== "" ? this.state.documentMailingAddressLine2.toString() : null,
         documentMailingCity: this.state.documentMailingCity.toString(),
         documentMailingState: this.state.documentMailingState.toString(),
         documentMailingZip:
           this.state.documentMailingZip.toString() +
           "-" +
-          this.state.documentMailingZip1.toString(),
+          this.state.documentMailingZip1 !== "" ? this.state.documentMailingZip1.toString() : "",
         documentMailingPriorityMailingMe: this.state.documentMailingPriorityMailingMethod.toString(),
         permanentTaxAddressLine1: this.state.permanentTaxAddressLine1.toString(),
-        permanentTaxAddressLine2: this.state.permanentTaxAddressLine2.toString(),
+        permanentTaxAddressLine2: this.state.permanentTaxAddressLine2 !== "" ?this.state.permanentTaxAddressLine2.toString() : null,
         permanentTaxCity: this.state.permanentTaxCity.toString(),
         permanentTaxState: this.state.permanentTaxState.toString(),
         permanentTaxZip:
           this.state.permanentTaxZip.toString() +
           "-" +
-          this.state.permanentTaxZip1.toString(),
+          this.state.permanentTaxZip1 !== "" ? this.state.permanentTaxZip1.toString() : "",
         permanentTaxPriorityMailingMetho: this.state.permanentTaxPriorityMailingMethod.toString(),
         trusteeName:
           this.state.trusteeName !== undefined
@@ -461,26 +464,16 @@ export class AdminAccountInformation extends React.Component<any, any> {
       primaryShareholdingContact_Error: this.state
         .primaryShareholdingContact_Error,
       shareholdingEmailAddress_Error: this.state.shareholdingEmailAddress_Error,
-      //shareholdingShortName_Error: this.state.shareholdingShortName_Error,
-      // phone_Error: this.state.phone_Error,
-      // phone1_Error: this.state.phone1_Error,
       mergerID_Error: this.state.mergerID_Error,
       trustType_Error: this.state.trustType_Error,
       scorpFamily_Error: this.state.scorpFamily_Error,
       documentMailingLabelAddressee1_Error: this.state
         .documentMailingLabelAddressee1_Error,
-      documentMailingLabelAddressee2_Error: this.state
-        .documentMailingLabelAddressee2_Error,
-      documentMailingLabelAddressee3_Error: this.state
-        .documentMailingLabelAddressee3_Error,
       documentMailingAddressLine1_Error: this.state
         .documentMailingAddressLine1_Error,
-      documentMailingAddressLine2_Error: this.state
-        .documentMailingAddressLine2_Error,
       documentMailingCity_Error: this.state.documentMailingCity_Error,
       documentMailingState_Error: this.state.documentMailingState_Error,
       documentMailingZip_Error: this.state.documentMailingZip_Error,
-      documentMailingZip1_Error: this.state.documentMailingZip1_Error,
       documentMailingPriorityMailingMethod_Error: this.state
         .documentMailingPriorityMailingMethod_Error
     };
@@ -528,33 +521,11 @@ export class AdminAccountInformation extends React.Component<any, any> {
     } else {
       error.documentMailingLabelAddressee1_Error = false;
     }
-
-    if (this.state.documentMailingLabelAddressee2 === "") {
-      this.setState({ documentMailingLabelAddressee2_Error: true });
-      error.documentMailingLabelAddressee2_Error = true;
-    } else {
-      error.documentMailingLabelAddressee2_Error = false;
-    }
-
-    if (this.state.documentMailingLabelAddressee3 === "") {
-      this.setState({ documentMailingLabelAddressee3_Error: true });
-      error.documentMailingLabelAddressee3_Error = true;
-    } else {
-      error.documentMailingLabelAddressee3_Error = false;
-    }
-
     if (this.state.documentMailingAddressLine1 === "") {
       this.setState({ documentMailingAddressLine1_Error: true });
       error.documentMailingAddressLine1_Error = true;
     } else {
       error.documentMailingAddressLine1_Error = false;
-    }
-
-    if (this.state.documentMailingAddressLine2 === "") {
-      this.setState({ documentMailingAddressLine2_Error: true });
-      error.documentMailingAddressLine2_Error = true;
-    } else {
-      error.documentMailingAddressLine2_Error = false;
     }
 
     if (this.state.documentMailingCity === "") {
@@ -576,14 +547,6 @@ export class AdminAccountInformation extends React.Component<any, any> {
     } else {
       error.documentMailingZip_Error = false;
     }
-
-    if (this.state.documentMailingZip1 === "") {
-      this.setState({ documentMailingZip1_Error: true });
-      error.documentMailingZip1_Error = true;
-    } else {
-      error.documentMailingZip1_Error = false;
-    }
-
     if (this.state.documentMailingPriorityMailingMethod === "NA") {
       this.setState({
         documentMailingPriorityMailingMethod_Error: true
@@ -605,12 +568,10 @@ export class AdminAccountInformation extends React.Component<any, any> {
   public shareholderAndTrusteeAdd = e => {
     let error = {
       permanentTaxAddressLine1_Error: this.state.permanentTaxAddressLine1_Error,
-      permanentTaxAddressLine2_Error: this.state.permanentTaxAddressLine2_Error,
       permanentTaxCity_Error: this.state.permanentTaxCity_Error,
       permanentTaxState_Error: this.state.permanentTaxState_Error,
       permanentTaxZip_Error: this.state.permanentTaxZip_Error,
       phone1_Error: this.state.phone1_Error,
-      permanentTaxZip1_Error: this.state.permanentTaxZip1_Error,
       permanentTaxPriorityMailingMethod_Error: this.state
         .permanentTaxPriorityMailingMethod_Error
     };
@@ -621,12 +582,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
     } else {
       error.permanentTaxAddressLine1_Error = false;
     }
-    if (this.state.permanentTaxAddressLine2 === "") {
-      this.setState({ permanentTaxAddressLine2_Error: true });
-      error.permanentTaxAddressLine2_Error = true;
-    } else {
-      error.permanentTaxAddressLine2_Error = false;
-    }
+
     if (this.state.permanentTaxCity === "") {
       this.setState({ permanentTaxCity_Error: true });
       error.permanentTaxCity_Error = true;
@@ -644,12 +600,6 @@ export class AdminAccountInformation extends React.Component<any, any> {
       error.permanentTaxZip_Error = true;
     } else {
       error.permanentTaxZip_Error = false;
-    }
-    if (this.state.permanentTaxZip1 === "") {
-      this.setState({ permanentTaxZip1_Error: true });
-      error.permanentTaxZip1_Error = true;
-    } else {
-      error.permanentTaxZip1_Error = false;
     }
     if (this.state.permanentTaxPriorityMailingMethod === "NA") {
       this.setState({ permanentTaxPriorityMailingMethod_Error: true });
@@ -689,6 +639,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
     return (
       <div className={styles.shareholders}>
         <div>
+        <ThemeProvider theme={outerTheme}>
           <div className="row">
             <React.Fragment>
               <Snackbar
@@ -766,7 +717,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Shareholding Name"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -796,7 +747,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Primary Shareholding Contact*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -834,7 +785,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Shareholding Email Address*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -872,7 +823,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Shareholding Short Name"
                                       onChange={e => {
                                         this.setState({
@@ -889,7 +840,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   >
                                     <div className="row">
                                       <div className="col-sm-6">
-                                        <CustomTextField
+                                        <TextField
                                           fullWidth
                                           label="Phone"
                                           onChange={e => {
@@ -942,7 +893,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   >
                                     <div className="row">
                                       <div className="col-sm-6">
-                                        <CustomTextField
+                                        <TextField
                                           fullWidth
                                           label="Phone1"
                                           onChange={e => {
@@ -995,7 +946,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Merger ID"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1080,7 +1031,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Trust Type"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1109,7 +1060,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="S-Corp Family"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1153,7 +1104,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Document Mailing Label Addressee 1*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1192,14 +1143,14 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
-                                      label="Document Mailing Label Addressee 2*"
+                                    <TextField
+                                      label="Document Mailing Label Addressee 2"
                                       onChange={e => {
                                         if (e.target.value === "") {
                                           this.setState({
                                             documentMailingLabelAddressee2:
                                               e.target.value,
-                                            documentMailingLabelAddressee2_Error: true
+                                            documentMailingLabelAddressee2_Error: false
                                           });
                                         } else {
                                           this.setState({
@@ -1231,14 +1182,14 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
-                                      label="Document Mailing Label Addressee 3*"
+                                    <TextField
+                                      label="Document Mailing Label Addressee 3"
                                       onChange={e => {
                                         if (e.target.value === "") {
                                           this.setState({
                                             documentMailingLabelAddressee3:
                                               e.target.value,
-                                            documentMailingLabelAddressee3_Error: true
+                                            documentMailingLabelAddressee3_Error: false
                                           });
                                         } else {
                                           this.setState({
@@ -1270,7 +1221,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Document Mailing Address Line 1*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1308,14 +1259,14 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
-                                      label="Document Mailing Address Line 2*"
+                                    <TextField
+                                      label="Document Mailing Address Line 2"
                                       onChange={e => {
                                         if (e.target.value === "") {
                                           this.setState({
                                             documentMailingAddressLine2:
                                               e.target.value,
-                                            documentMailingAddressLine2_Error: true
+                                            documentMailingAddressLine2_Error: false
                                           });
                                         } else {
                                           this.setState({
@@ -1346,7 +1297,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <CustomTextField
+                                    <TextField
                                       label="Document Mailing City*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1430,7 +1381,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   >
                                     <div className="row">
                                       <div className="col-sm-6">
-                                        <CustomTextField
+                                        <TextField
                                           fullWidth
                                           label="Document Mailing Zip*"
                                           onChange={e => {
@@ -1472,7 +1423,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                         />
                                       </div>
                                       <div className="col-sm-6">
-                                        <CustomTextField
+                                        <TextField
                                           style={{ marginTop: "16px" }}
                                           fullWidth
                                           onChange={e => {
@@ -1638,7 +1589,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <CustomTextField
+                                  <TextField
                                     label="Permanent Tax Address Line1"
                                     onChange={e => {
                                       if (e.target.value === "") {
@@ -1672,14 +1623,14 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <CustomTextField
+                                  <TextField
                                     label="Permanent Tax Address Line2"
                                     onChange={e => {
                                       if (e.target.value === "") {
                                         this.setState({
                                           permanentTaxAddressLine2:
                                             e.target.value,
-                                          permanentTaxAddressLine2_Error: true
+                                          permanentTaxAddressLine2_Error: false
                                         });
                                       } else {
                                         this.setState({
@@ -1706,7 +1657,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <CustomTextField
+                                  <TextField
                                     label="Permanent Tax City"
                                     onChange={e => {
                                       if (e.target.value === "") {
@@ -1783,7 +1734,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                 >
                                   <div className="row">
                                     <div className="col-sm-6">
-                                      <CustomTextField
+                                      <TextField
                                         fullWidth
                                         label="Permanent Tax Zip"
                                         onChange={e => {
@@ -1820,7 +1771,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                       />
                                     </div>
                                     <div className="col-sm-6">
-                                      <CustomTextField
+                                      <TextField
                                         style={{ marginTop: "16px" }}
                                         fullWidth
                                         onChange={e => {
@@ -1936,7 +1887,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <CustomTextField
+                                  <TextField
                                     label="Trustee Name(s)"
                                     onChange={event => {
                                       this.setState({
@@ -2318,7 +2269,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <CustomTextField
+                                  <TextField
                                     label="UnRestricted Shares"
                                     onChange={e => {
                                       this.setState({
@@ -2333,7 +2284,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <CustomTextField
+                                  <TextField
                                     label="Restricted Shares"
                                     onChange={e => {
                                       this.setState({
@@ -2348,7 +2299,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <CustomTextField
+                                  <TextField
                                     label="Vested Options"
                                     onChange={e => {
                                       this.setState({
@@ -2363,7 +2314,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <CustomTextField
+                                  <TextField
                                     label="UnVested Options"
                                     onChange={e => {
                                       this.setState({
@@ -2456,6 +2407,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
               </Stepper>
             </div>
           </Paper>
+        </ThemeProvider>
         </div>
       </div>
     );

@@ -38,12 +38,86 @@ export const CustomSelect = withStyles({
 
 })(Select);
 
+export const outerTheme = createMuiTheme({
+  overrides: {
+    MuiInputBase:{
+      input:{
+        //zIndex:-1
+        "&$after": {
+          zIndex: 1,
+        },
+        "&$before": {
+          zIndex: -1,
+        },
+      }
+    },
+    MuiInput:{
+      underline:{
+        //borderBottom: "2px solid #976340",
+        "&:after": {
+          borderBottom: "1px solid #976340!important"
+        },
+        "&:before": {
+          borderBottom: "1px solid #976340!important"
+        }
+      },
+      root: {
+        color: "black",
+        borderColor: "#976340",
+        "& after": {
+          color: "black",
+          borderColor: "#976340"
+        },
+        "& fieldset": {
+          color: "black",
+          borderColor: "#976340"
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "#976340"
+        }
+      }
+    },
+    MuiInputLabel: {
+      root: {
+        "&$after": {
+          zIndex: 1,
+        },
+        "&$before": {
+          zIndex: -1,
+        },
+        cursor: "auto",
+        color: "#976340",
+        "&$focused": {
+          color: "#976340"
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "#976340"
+        },
+      }
+    },
+  },
+  palette: {
+    primary: {
+      light: "#ab8266",
+      main: "#976340",
+      dark: "#69452c",
+      contrastText: "#fff"
+    },
+    secondary: {
+      main: "#cb2030"
+    }
+  }
+});
 
 export const CustomTextField = withStyles({
   root: {
     '& .MuiInputBase-input':{
       zIndex:-1,
-      color: '#976340',
+      color: 'black',
+      borderColor: '#976340',
+    },
+    '& .MuiInputBase-input:after':{
+      color: 'black',
       borderColor: '#976340',
     },
     '& .MuiInputBase-input:focus':{
@@ -53,22 +127,37 @@ export const CustomTextField = withStyles({
     '& .MuiInputLabel-animated':{
       color: '#976340',
     },
+    '& .MuiInputLabel-animated:after':{
+      color: '#976340',
+      zIndex:-1
+    },
+    '& .MuiInputLabel-animated:before':{
+      color: '#976340',
+      zIndex:1
+    },
     '& .MuiInputBase-input:hover':{
       color: '#976340',
       borderColor: '#976340',
     },
     '& .MuiTextField-root':{
-      color: '#976340',
-      zIndex:1
+      color: '#976340'
     },
     '& label.MuiTextField-root':{
       color: '#976340',
+    },
+    '& label.MuiTextField-root:before':{
+      color: '#976340',
       zIndex:1
+    },
+    '& label.MuiTextField-root:after':{
+      color: '#976340',
+      zIndex:-1
     },
     '& label.Mui-focused': {
       color: '#976340',
     },
     '& .MuiInput-underline:after': {
+      zIndex:1,
       borderBottomColor: '#976340',
     },
     '& .MuiOutlinedInput-root': {

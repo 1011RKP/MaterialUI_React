@@ -6,7 +6,8 @@ import {
   TableFooter,
   TableHead,
   TablePagination,
-  TableRow
+  TableRow,
+  TextField
 } from "@material-ui/core";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
@@ -15,9 +16,76 @@ import { Web } from "@pnp/pnpjs";
 import * as _ from "lodash";
 import * as React from "react";
 import { HashRouter as Router, Link, Route, Switch } from "react-router-dom";
-import { CustomTextField } from "../common/common";
+//import { outerTheme } from "../common/common";
 import { MyShareholdingsDetails } from "./MyShareholdingsDetails";
 import styles from "./shareholders.module.scss";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
+export const outerTheme = createMuiTheme({
+  overrides: {
+    MuiInputBase:{
+      input:{
+        zIndex:-1
+      }
+    }
+    ,
+    MuiInput:{
+      underline:{
+        //borderBottom: "2px solid #976340",
+        "&:after": {
+          borderBottom: "1px solid #976340!important"
+        },
+        "&:before": {
+          borderBottom: "1px solid #976340!important"
+        }
+      },
+      root: {
+        color: "black",
+        borderColor: "#976340",
+        "& after": {
+          color: "black",
+          borderColor: "#976340"
+        },
+        "& fieldset": {
+          color: "black",
+          borderColor: "#976340"
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "#976340"
+        }
+      }
+    },
+    MuiInputLabel: {
+      root: {
+        "&$after": {
+          zIndex: 1,
+        },
+        "&$before": {
+          zIndex: -1,
+        },
+        cursor: "auto",
+        color: "#976340",
+        "&$focused": {
+          color: "#976340"
+        },
+        "& .MuiInput-underline:after": {
+          borderBottomColor: "#976340"
+        },
+      }
+    },
+  },
+  palette: {
+    primary: {
+      light: "#ab8266",
+      main: "#976340",
+      dark: "#69452c",
+      contrastText: "#fff"
+    },
+    secondary: {
+      main: "#cb2030"
+    }
+  }
+});
 
 export class MyShareholdings extends React.Component<any, any> {
   public constructor(props: any, state: any) {
@@ -30,7 +98,9 @@ export class MyShareholdings extends React.Component<any, any> {
       shareholdingTitle: "Shareholdings",
       sortShareholderID: "NA", //desc
       sortShares: "NA",
+      sortOptions: "NA",
       totalSharesOwned: 0,
+      totalOptions:0,
       page: 0,
       rowsPerPage: 3
     };
@@ -63,7 +133,7 @@ export class MyShareholdings extends React.Component<any, any> {
         unique = _.uniqBy(d, e => {
           return e.shareholderID;
         });
-        let totalShares = 0;
+        let totalShares = 0;  let totalOptions = 0;
         this.setState(prevState => ({
           ...prevState,
           shareholdingsCollection: unique,
@@ -71,10 +141,14 @@ export class MyShareholdings extends React.Component<any, any> {
         }));
         for (let index = 0; index < unique.length; index++) {
           totalShares += parseFloat(unique[index].shares.replace(/,/g, ""));
+          totalOptions += parseFloat(d[index].options.replace(/,/g, ""));
         }
+        let s = (totalShares.toString()).slice(0, ((totalShares.toString()).indexOf("."))+3);
+        let o = (totalOptions.toString()).slice(0, ((totalOptions.toString()).indexOf("."))+3);
         this.setState(prevState => ({
           ...prevState,
-          totalSharesOwned: totalShares.toLocaleString()
+          totalSharesOwned: Number(s),
+          totalOptions:Number(o)
         }));
       });
   }
@@ -140,8 +214,23 @@ export class MyShareholdings extends React.Component<any, any> {
           });
         }
         break;
-      case "options":
-        break;
+        case "options":
+          if (sortType === "asc" || sortType === "NA") {
+            var sortCol = this.state.shareholdingsCollection;
+            sortCol = _.orderBy(sortCol, column, sortType);
+            this.setState({
+              shareholdingsCollection: sortCol,
+              sortOptions: "desc"
+            });
+          } else {
+            var sortCol = this.state.shareholdingsCollection;
+            sortCol = _.orderBy(sortCol, column, sortType);
+            this.setState({
+              shareholdingsCollection: sortCol,
+              sortOptions: "asc"
+            });
+          }
+          break;
       case "shares":
         if (sortType === "asc" || sortType === "NA") {
           var sortCol = this.state.shareholdingsCollection;
@@ -178,14 +267,40 @@ export class MyShareholdings extends React.Component<any, any> {
                   </div>
                   <div className="row-fluid" style={{ marginTop: "10px" }}>
                     <div className="row-fluid" style={{ marginBottom: "15px" }}>
+                    <ThemeProvider theme={outerTheme}>
                       <FormControl fullWidth>
-                        <CustomTextField
+                        <TextField
                           onChange={this.handleSearch}
                           label="Search by Account ID..."
                         />
                       </FormControl>
+                      </ThemeProvider>
                     </div>
                     <Router>
+                      <Table
+                        style={{
+                          background: "rgb(224, 224, 224)",
+                          borderBottom: "2px solid white"
+                        }}
+                      >
+                        <TableFooter>
+                          <TableRow>
+                            <TablePagination
+                              rowsPerPageOptions={[
+                                5,
+                                10,
+                                { label: "All", value: -1 }
+                              ]}
+                              colSpan={4}
+                              count={this.state.shareholdingsCollection.length}
+                              rowsPerPage={this.state.rowsPerPage}
+                              page={this.state.page}
+                              onChangePage={this.handleChangePage}
+                              onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                            />
+                          </TableRow>
+                        </TableFooter>
+                      </Table>
                       <Table style={{ border: "1px solid #e0e0e0" }}>
                         <TableHead style={{ background: "#e0e0e0" }}>
                           <TableRow>
@@ -212,8 +327,27 @@ export class MyShareholdings extends React.Component<any, any> {
                               </a>
                             </TableCell>
                             <TableCell className={styles.tblCell} align="right">
-                              Option
+                              <a
+                                style={{ cursor: "pointer" }}
+                                onClick={e => {
+                                  this.handleSort(
+                                    this.state.sortOptions,
+                                    "options"
+                                  );
+                                }}
+                              >
+                                {this.state.sortOptions === "asc" ? (
+                                  <ArrowUpwardIcon />
+                                ) : null}
+                                {this.state.sortOptions === "desc" ? (
+                                  <ArrowDownwardIcon />
+                                ) : null}
+                                Option
+                              </a>
                             </TableCell>
+                            {/* <TableCell className={styles.tblCell} align="right">
+                              Option
+                            </TableCell> */}
                             <TableCell className={styles.tblCell} align="right">
                               <a
                                 style={{ cursor: "pointer" }}
@@ -266,17 +400,38 @@ export class MyShareholdings extends React.Component<any, any> {
                               <TableCell align="right">
                                 {shareholdings.options === 0
                                   ? "-"
-                                  : Math.trunc(shareholdings.options)}
+                                  : shareholdings.options
+                                      .toString()
+                                      .slice(
+                                        0,
+                                        shareholdings.options
+                                          .toString()
+                                          .indexOf(".") + 3
+                                      )
+                                //Math.trunc(shareholdings.options)
+                                }
                               </TableCell>
                               <TableCell align="right">
-                                {Math.trunc(shareholdings.shares)}
+                                {shareholdings.shares
+                                  .toString()
+                                  .slice(
+                                    0,
+                                    shareholdings.shares
+                                      .toString()
+                                      .indexOf(".") + 3
+                                  )}
+                                {/* {Math.trunc(shareholdings.shares)} */}
                               </TableCell>
                             </TableRow>
                           ))}
 
                           <TableRow key="001">
-                            <TableCell component="th" scope="row" colSpan={4}>
+                            <TableCell component="th" scope="row" colSpan={2}>
                               Total Shares Owned: {this.state.totalSharesOwned}
+                            </TableCell>
+                            <TableCell component="th" scope="row" colSpan={2}>
+                              Total Options Owned:
+                              {this.state.totalOptions}
                             </TableCell>
                           </TableRow>
                         </TableBody>

@@ -4,40 +4,35 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Paper from "@material-ui/core/Paper";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import DescriptionIcon from "@material-ui/icons/Description";
 import HelpIcon from "@material-ui/icons/Help";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 import PieChartIcon from "@material-ui/icons/PieChart";
+import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import { SPComponentLoader } from "@microsoft/sp-loader";
-import * as jQuery from "jquery";
 //import { sp } from "@pnp/sp";
-import pnp, { Web, sp } from "@pnp/pnpjs";
-import {
-  SPHttpClient,
-  SPHttpClientResponse,
-  SPHttpClientConfiguration
-} from "@microsoft/sp-http";
-
-import { CurrentUser } from "@pnp/sp/src/siteusers";
+import { Web } from "@pnp/pnpjs";
+import "babel-polyfill";
+import "es6-promise";
+import * as jQuery from "jquery";
 import { Panel } from "office-ui-fabric-react/lib/Panel";
 import * as React from "react";
 import { HashRouter as Router, Link, Route, Switch } from "react-router-dom";
-import { MyShareholdings } from "./shareholders/MyShareholdings";
-import { DashBoard } from "./dashboard/dashboard";
+import { AdminReportsHome } from "./adminReports/AdminReportsHome";
+import { outerTheme } from "./common/common";
 import { AdminDashBoard } from "./dashboard/admin_Dashboard";
-import { HelpCenter } from "./helpcenter/helpcenter";
-import { Investmenttax } from "./investmenttax/investmenttax";
+import { DashBoard } from "./dashboard/dashboard";
 import { AdmindocumentsandForms } from "./documentsandforms/admin_documentsandForms";
 import { DocumentsandForms } from "./documentsandforms/documentsandforms";
+import { HelpCenter } from "./helpcenter/helpcenter";
 import { IShareHolderPortalProps } from "./IShareHolderPortalProps";
 import styles from "./ShareHolderPortal.module.scss";
-import { MyShareholdingsDetails } from "./shareholders/MyShareholdingsDetails";
-import { AdminShareholdings } from "./shareholders/Admins/Admin_Shareholdings";
 import { AdminShareholdersDetails } from "./shareholders/Admins/Admin_ShareholdersDetails";
-import { AdminReportsHome } from "./adminReports/AdminReportsHome";
-import "babel-polyfill";
-import "es6-promise";
+import { AdminShareholdings } from "./shareholders/Admins/Admin_Shareholdings";
+import { MyShareholdings } from "./shareholders/MyShareholdings";
+import { MyShareholdingsDetails } from "./shareholders/MyShareholdingsDetails";
 
 SPComponentLoader.loadCss(
   "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -59,7 +54,7 @@ export default class ShareHolderPortal extends React.Component<
     // this.dismissPanel = this.dismissPanel.bind(this);
     // this.openPanel = this.openPanel.bind(this);
     this.state = {
-      shareholdingCollection:[],
+      shareholdingCollection: [],
       setIsOpen: false,
       value: 0,
       setValue: 0,
@@ -124,7 +119,7 @@ export default class ShareHolderPortal extends React.Component<
                         this.setState(
                           {
                             isCurrentUserAdmin: true,
-                            shareholderID:"",
+                            shareholderID: ""
                           }
                           // ,
                           // () => {
@@ -135,7 +130,7 @@ export default class ShareHolderPortal extends React.Component<
                         this.setState(
                           {
                             isCurrentUserAdmin: false,
-                            shareholderID:"",
+                            shareholderID: ""
                           }
                           // ,
                           // () => {
@@ -157,20 +152,20 @@ export default class ShareHolderPortal extends React.Component<
   public getEndUserDetails = () => {
     let newWeb = new Web(this.state.tenentURL + "/sites/vti_ww_00_9292_spfx/");
     newWeb.lists
-    .getByTitle("Shareholdings")
-    .items.select(
-      "ID",
-      "Title",
-      "shares",
-      "options",
-      "shareholderID",
-      "shareholderEmail",
-      "unrestrictedShares",
-      "restrictedShares",
-      "vestedOptions",
-      "unvestedOptions",
-      "aceessType"
-    )
+      .getByTitle("Shareholdings")
+      .items.select(
+        "ID",
+        "Title",
+        "shares",
+        "options",
+        "shareholderID",
+        "shareholderEmail",
+        "unrestrictedShares",
+        "restrictedShares",
+        "vestedOptions",
+        "unvestedOptions",
+        "aceessType"
+      )
       .orderBy("Title", true)
       .filter("shareholderEmail eq '" + this.state.accountEmail + "'")
       .get()
@@ -183,7 +178,7 @@ export default class ShareHolderPortal extends React.Component<
         } else {
           this.setState(prevState => ({
             ...prevState,
-            shareholdingCollection:[0]
+            shareholdingCollection: [0]
           }));
         }
         console.log(this.state);
@@ -202,408 +197,417 @@ export default class ShareHolderPortal extends React.Component<
       <div className={styles.shareHolderPortal}>
         <div className={styles.root}>
           {this.state.shareholderID !== null ? (
-            <Grid container spacing={3}>
-              <Router>
-                <div className="hidden-md-up">
-                  <Hidden only={["lg", "md", "xl"]}>
-                    <Grid item xs={12} sm={12}>
-                      <Paper className={styles.paper}>
-                        <a onClick={this.openPanel} style={{ float: "right" }}>
-                          <MenuIcon fontSize="large" />
-                        </a>
-                        <Panel
-                          isOpen={this.state.setIsOpen}
-                          onDismiss={this.dismissPanel}
-                          isLightDismiss={true}
-                          headerText="Panel - Small, left-aligned, fixed"
-                        >
-                          <List component="nav">
+            // <MuiThemeProvider theme={outerTheme}>
+              <Grid container spacing={3}>
+                <Router>
+                  <div className="hidden-md-up">
+                    <Hidden only={["lg", "md", "xl"]}>
+                      <Grid item xs={12} sm={12}>
+                        <Paper className={styles.paper}>
+                          <a
+                            onClick={this.openPanel}
+                            style={{ float: "right" }}
+                          >
+                            <MenuIcon fontSize="large" />
+                          </a>
+                          <Panel
+                            isOpen={this.state.setIsOpen}
+                            onDismiss={this.dismissPanel}
+                            isLightDismiss={true}
+                            headerText="Panel - Small, left-aligned, fixed"
+                          >
+                            <List component="nav">
+                              <React.Fragment>
+                                {this.state.isCurrentUserAdmin !== true ? (
+                                  <React.Fragment>
+                                    <ListItem>
+                                      <ListItemIcon>
+                                        <Link className={styles.linkto} to="/">
+                                          <HomeIcon fontSize="default" />
+                                          DashBoard
+                                        </Link>
+                                      </ListItemIcon>
+                                    </ListItem>
+                                    <ListItem>
+                                      <ListItemIcon>
+                                        <Link
+                                          className={styles.linkto}
+                                          to={{
+                                            pathname: `/myShareholdings`
+                                          }}
+                                        >
+                                          <PieChartIcon fontSize="default" />
+                                          Shareholdings
+                                        </Link>
+                                      </ListItemIcon>
+                                    </ListItem>
+                                    <ListItem>
+                                      <ListItemIcon>
+                                        <Link
+                                          className={styles.linkto}
+                                          to="/documentsandforms"
+                                        >
+                                          <DescriptionIcon fontSize="default" />
+                                          Documents and Forms
+                                        </Link>
+                                      </ListItemIcon>
+                                    </ListItem>
+                                    <ListItem>
+                                      <ListItemIcon>
+                                        <Link
+                                          className={styles.linkto}
+                                          to="/helpCenter"
+                                        >
+                                          <HelpIcon fontSize="default" />
+                                          HelpCenter
+                                        </Link>
+                                      </ListItemIcon>
+                                    </ListItem>
+                                  </React.Fragment>
+                                ) : (
+                                  <React.Fragment>
+                                    <ListItem>
+                                      <ListItemIcon>
+                                        <Link className={styles.linkto} to="/">
+                                          <HomeIcon fontSize="default" />
+                                          DashBoard
+                                        </Link>
+                                      </ListItemIcon>
+                                    </ListItem>
+                                    <ListItem>
+                                      <ListItemIcon>
+                                        <Link
+                                          className={styles.linkto}
+                                          to="/adminDocumentsandForms"
+                                        >
+                                          <DescriptionIcon fontSize="default" />
+                                          Documents and Forms
+                                        </Link>
+                                      </ListItemIcon>
+                                    </ListItem>
+                                    <ListItem>
+                                      <ListItemIcon>
+                                        <Link
+                                          className={styles.linkto}
+                                          to="/helpCenter"
+                                        >
+                                          <HelpIcon fontSize="default" />
+                                          HelpCenter
+                                        </Link>
+                                      </ListItemIcon>
+                                    </ListItem>
+                                  </React.Fragment>
+                                )}
+                              </React.Fragment>
+                            </List>
+                          </Panel>
+                        </Paper>
+                      </Grid>
+                    </Hidden>
+                  </div>
+                  <Hidden only={["sm", "xs"]}>
+                    <Grid
+                      item
+                      lg={2}
+                      md={2}
+                      className={styles.container_lg_sideNavigation}
+                    >
+                      <List component="nav">
+                        <React.Fragment>
+                          {this.state.isCurrentUserAdmin !== true ? (
                             <React.Fragment>
-                              {this.state.isCurrentUserAdmin !== true ? (
-                                <React.Fragment>
-                                  <ListItem>
-                                    <ListItemIcon>
-                                      <Link className={styles.linkto} to="/">
-                                        <HomeIcon fontSize="default" />
-                                        DashBoard
-                                      </Link>
-                                    </ListItemIcon>
-                                  </ListItem>
-                                  <ListItem>
-                                    <ListItemIcon>
-                                      <Link
-                                        className={styles.linkto}
-                                        to={{
-                                          pathname: `/myShareholdings`
-                                        }}
-                                      >
-                                        <PieChartIcon fontSize="default" />
-                                        Shareholdings
-                                      </Link>
-                                    </ListItemIcon>
-                                  </ListItem>
-                                  <ListItem>
-                                    <ListItemIcon>
-                                      <Link
-                                        className={styles.linkto}
-                                        to="/documentsandforms"
-                                      >
-                                        <DescriptionIcon fontSize="default" />
-                                        Documents and Forms
-                                      </Link>
-                                    </ListItemIcon>
-                                  </ListItem>
-                                  <ListItem>
-                                    <ListItemIcon>
-                                      <Link
-                                        className={styles.linkto}
-                                        to="/helpCenter"
-                                      >
-                                        <HelpIcon fontSize="default" />
-                                        HelpCenter
-                                      </Link>
-                                    </ListItemIcon>
-                                  </ListItem>
-                                </React.Fragment>
-                              ) : (
-                                <React.Fragment>
-                                  <ListItem>
-                                    <ListItemIcon>
-                                      <Link className={styles.linkto} to="/">
-                                        <HomeIcon fontSize="default" />
-                                        DashBoard
-                                      </Link>
-                                    </ListItemIcon>
-                                  </ListItem>
-                                  <ListItem>
-                                    <ListItemIcon>
-                                      <Link
-                                        className={styles.linkto}
-                                        to="/adminDocumentsandForms"
-                                      >
-                                        <DescriptionIcon fontSize="default" />
-                                        Documents and Forms
-                                      </Link>
-                                    </ListItemIcon>
-                                  </ListItem>
-                                  <ListItem>
-                                    <ListItemIcon>
-                                      <Link
-                                        className={styles.linkto}
-                                        to="/helpCenter"
-                                      >
-                                        <HelpIcon fontSize="default" />
-                                        HelpCenter
-                                      </Link>
-                                    </ListItemIcon>
-                                  </ListItem>
-                                </React.Fragment>
-                              )}
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link className={styles.linkto} to="/">
+                                    <HomeIcon fontSize="default" />
+                                    DashBoard
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link
+                                    className={styles.linkto}
+                                    to={{
+                                      pathname: `/myShareholdings`
+                                    }}
+                                  >
+                                    <PieChartIcon fontSize="default" />
+                                    Shareholdings
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link
+                                    className={styles.linkto}
+                                    to="/documentsandforms"
+                                  >
+                                    <DescriptionIcon fontSize="default" />
+                                    Documents and Forms
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link
+                                    className={styles.linkto}
+                                    to="/helpCenter"
+                                  >
+                                    <HelpIcon fontSize="default" />
+                                    HelpCenter
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
                             </React.Fragment>
-                          </List>
-                        </Panel>
-                      </Paper>
+                          ) : (
+                            <React.Fragment>
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link className={styles.linkto} to="/">
+                                    <HomeIcon fontSize="default" />
+                                    DashBoard
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link
+                                    className={styles.linkto}
+                                    to={{
+                                      pathname: `/adminShareholdings`
+                                    }}
+                                  >
+                                    <PieChartIcon fontSize="default" />
+                                    Shareholdings
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link
+                                    className={styles.linkto}
+                                    to="/adminDocumentsandForms"
+                                  >
+                                    <DescriptionIcon fontSize="default" />
+                                    Documents and Forms
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link
+                                    className={styles.linkto}
+                                    to="/helpCenter"
+                                  >
+                                    <HelpIcon fontSize="default" />
+                                    HelpCenter
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
+                              <ListItem>
+                                <ListItemIcon>
+                                  <Link
+                                    className={styles.linkto}
+                                    to="/adminReportsHome"
+                                  >
+                                    <DescriptionIcon fontSize="default" />
+                                    Admin Reports
+                                  </Link>
+                                </ListItemIcon>
+                              </ListItem>
+                            </React.Fragment>
+                          )}
+                        </React.Fragment>
+                      </List>
                     </Grid>
                   </Hidden>
-                </div>
-                <Hidden only={["sm", "xs"]}>
                   <Grid
                     item
-                    lg={2}
-                    md={2}
-                    className={styles.container_lg_sideNavigation}
+                    xs={12}
+                    sm={12}
+                    md={10}
+                    lg={10}
+                    xl={10}
+                    className={styles.container_lg_contentArea}
                   >
-                    <List component="nav">
-                      <React.Fragment>
-                        {this.state.isCurrentUserAdmin !== true ? (
-                          <React.Fragment>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link className={styles.linkto} to="/">
-                                  <HomeIcon fontSize="default" />
-                                  DashBoard
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link
-                                  className={styles.linkto}
-                                  to={{
-                                    pathname: `/myShareholdings`
-                                  }}
-                                >
-                                  <PieChartIcon fontSize="default" />
-                                  Shareholdings
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link
-                                  className={styles.linkto}
-                                  to="/documentsandforms"
-                                >
-                                  <DescriptionIcon fontSize="default" />
-                                  Documents and Forms
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link
-                                  className={styles.linkto}
-                                  to="/helpCenter"
-                                >
-                                  <HelpIcon fontSize="default" />
-                                  HelpCenter
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                          </React.Fragment>
-                        ) : (
-                          <React.Fragment>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link className={styles.linkto} to="/">
-                                  <HomeIcon fontSize="default" />
-                                  DashBoard
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link
-                                  className={styles.linkto}
-                                  to={{
-                                    pathname: `/adminShareholdings`
-                                  }}
-                                >
-                                  <PieChartIcon fontSize="default" />
-                                  Shareholdings
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link
-                                  className={styles.linkto}
-                                  to="/adminDocumentsandForms"
-                                >
-                                  <DescriptionIcon fontSize="default" />
-                                  Documents and Forms
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link
-                                  className={styles.linkto}
-                                  to="/helpCenter"
-                                >
-                                  <HelpIcon fontSize="default" />
-                                  HelpCenter
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                            <ListItem>
-                              <ListItemIcon>
-                                <Link
-                                  className={styles.linkto}
-                                  to="/adminReportsHome"
-                                >
-                                  <DescriptionIcon fontSize="default" />
-                                  Admin Reports
-                                </Link>
-                              </ListItemIcon>
-                            </ListItem>
-                          </React.Fragment>
-                        )}
-                      </React.Fragment>
-                    </List>
+                    {this.state.isCurrentUserAdmin !== true ? (
+                      <Switch>
+                        <Route
+                          exact
+                          path="/"
+                          render={props => (
+                            <DashBoard
+                              properties={{
+                                tenentURL:
+                                  this.state.tenentURL +
+                                  "/sites/vti_ww_00_9292_spfx/",
+                                accountEmail: this.state.accountEmail
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/myShareholdings"
+                          render={props => (
+                            <MyShareholdings
+                              properties={{
+                                tenentURL:
+                                  this.state.tenentURL +
+                                  "/sites/vti_ww_00_9292_spfx/",
+                                accountEmail: this.state.accountEmail
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/documentsandforms"
+                          render={props => (
+                            <DocumentsandForms
+                              properties={{
+                                tenentURL:
+                                  this.state.tenentURL +
+                                  "/sites/vti_ww_00_9292_spfx/",
+                                accountEmail: this.state.accountEmail
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/helpCenter"
+                          render={props => (
+                            <HelpCenter
+                              properties={{
+                                newWeb: this.state.newWeb,
+                                accountID: this.state.shareholderID,
+                                accountEmail: this.state.accountEmail,
+                                tenentURL: this.state.tenentURL,
+                                isCurrentUserAdmin: this.state
+                                  .isCurrentUserAdmin,
+                                currentUserPermissions: ""
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/myShareholdingsDetails/:accountID"
+                          render={props => (
+                            <MyShareholdingsDetails
+                              properties={{
+                                tenentURL:
+                                  this.state.tenentURL +
+                                  "/sites/vti_ww_00_9292_spfx/",
+                                accountEmail: this.state.accountEmail
+                              }}
+                            />
+                          )}
+                        />
+                      </Switch>
+                    ) : (
+                      <Switch>
+                        <Route
+                          exact
+                          path="/"
+                          render={props => (
+                            <AdminDashBoard
+                              properties={{
+                                newWeb: this.state.newWeb,
+                                tenentURL:
+                                  this.state.tenentURL +
+                                  "/sites/vti_ww_00_9292_spfx/"
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/adminShareholdings"
+                          render={props => (
+                            <AdminShareholdings
+                              properties={{
+                                tenentURL:
+                                  this.state.tenentURL +
+                                  "/sites/vti_ww_00_9292_spfx/"
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/adminDocumentsandForms"
+                          render={props => (
+                            <AdmindocumentsandForms
+                              properties={{
+                                newWeb: this.state.newWeb,
+                                accountID: this.state.shareholderID,
+                                accountEmail: this.state.accountEmail,
+                                tenentURL: this.state.tenentURL,
+                                isCurrentUserAdmin: this.state
+                                  .isCurrentUserAdmin
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/helpCenter"
+                          render={props => (
+                            <HelpCenter
+                              properties={{
+                                newWeb: this.state.newWeb,
+                                accountID: this.state.shareholderID,
+                                accountEmail: this.state.accountEmail,
+                                tenentURL: this.state.tenentURL,
+                                isCurrentUserAdmin: this.state
+                                  .isCurrentUserAdmin,
+                                currentUserPermissions: ""
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/adminReportsHome"
+                          render={props => (
+                            <AdminReportsHome
+                              properties={{
+                                newWeb: this.state.newWeb,
+                                accountID: this.state.shareholderID,
+                                accountEmail: this.state.accountEmail,
+                                tenentURL:
+                                  this.state.tenentURL +
+                                  "/sites/vti_ww_00_9292_spfx/",
+                                isCurrentUserAdmin: this.state
+                                  .isCurrentUserAdmin,
+                                currentUserPermissions: ""
+                              }}
+                            />
+                          )}
+                        />
+                        <Route
+                          exact
+                          path="/adminShareholdersDetails/:accountID"
+                          render={props => (
+                            <AdminShareholdersDetails
+                              properties={{
+                                tenentURL:
+                                  this.state.tenentURL +
+                                  "/sites/vti_ww_00_9292_spfx/"
+                              }}
+                            />
+                          )}
+                        />
+                        )
+                      </Switch>
+                    )}
                   </Grid>
-                </Hidden>
-                <Grid
-                  item
-                  xs={12}
-                  sm={12}
-                  md={10}
-                  lg={10}
-                  xl={10}
-                  className={styles.container_lg_contentArea}
-                >
-                  {this.state.isCurrentUserAdmin !== true ? (
-                    <Switch>
-                      <Route
-                        exact
-                        path="/"
-                        render={props => (
-                          <DashBoard
-                            properties={{
-                              tenentURL:
-                                this.state.tenentURL +
-                                "/sites/vti_ww_00_9292_spfx/",
-                              accountEmail: this.state.accountEmail
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/myShareholdings"
-                        render={props => (
-                          <MyShareholdings
-                            properties={{
-                              tenentURL:
-                                this.state.tenentURL +
-                                "/sites/vti_ww_00_9292_spfx/",
-                              accountEmail: this.state.accountEmail
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/documentsandforms"
-                        render={props => (
-                          <DocumentsandForms
-                            properties={{
-                              tenentURL:
-                              this.state.tenentURL +
-                              "/sites/vti_ww_00_9292_spfx/",
-                            accountEmail: this.state.accountEmail
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/helpCenter"
-                        render={props => (
-                          <HelpCenter
-                            properties={{
-                              newWeb: this.state.newWeb,
-                              accountID: this.state.shareholderID,
-                              accountEmail: this.state.accountEmail,
-                              tenentURL: this.state.tenentURL,
-                              isCurrentUserAdmin: this.state.isCurrentUserAdmin,
-                              currentUserPermissions: ""
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/myShareholdingsDetails/:accountID"
-                        render={props => (
-                          <MyShareholdingsDetails
-                            properties={{
-                              tenentURL:
-                                this.state.tenentURL +
-                                "/sites/vti_ww_00_9292_spfx/",
-                                accountEmail:this.state.accountEmail
-                            }}
-                          />
-                        )}
-                      />
-                    </Switch>
-                  ) : (
-                    <Switch>
-                      <Route
-                        exact
-                        path="/"
-                        render={props => (
-                          <AdminDashBoard
-                            properties={{
-                              newWeb: this.state.newWeb,
-                              tenentURL:
-                                this.state.tenentURL +
-                                "/sites/vti_ww_00_9292_spfx/"
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/adminShareholdings"
-                        render={props => (
-                          <AdminShareholdings
-                            properties={{
-                              tenentURL:
-                                this.state.tenentURL +
-                                "/sites/vti_ww_00_9292_spfx/"
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/adminDocumentsandForms"
-                        render={props => (
-                          <AdmindocumentsandForms
-                            properties={{
-                              newWeb: this.state.newWeb,
-                              accountID: this.state.shareholderID,
-                              accountEmail: this.state.accountEmail,
-                              tenentURL: this.state.tenentURL,
-                              isCurrentUserAdmin: this.state.isCurrentUserAdmin
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/helpCenter"
-                        render={props => (
-                          <HelpCenter
-                            properties={{
-                              newWeb: this.state.newWeb,
-                              accountID: this.state.shareholderID,
-                              accountEmail: this.state.accountEmail,
-                              tenentURL: this.state.tenentURL,
-                              isCurrentUserAdmin: this.state.isCurrentUserAdmin,
-                              currentUserPermissions: ""
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/adminReportsHome"
-                        render={props => (
-                          <AdminReportsHome
-                            properties={{
-                              newWeb: this.state.newWeb,
-                              accountID: this.state.shareholderID,
-                              accountEmail: this.state.accountEmail,
-                              tenentURL:
-                                this.state.tenentURL +
-                                "/sites/vti_ww_00_9292_spfx/",
-                              isCurrentUserAdmin: this.state.isCurrentUserAdmin,
-                              currentUserPermissions: ""
-                            }}
-                          />
-                        )}
-                      />
-                      <Route
-                        exact
-                        path="/adminShareholdersDetails/:accountID"
-                        render={props => (
-                          <AdminShareholdersDetails
-                            properties={{
-                              tenentURL:
-                                this.state.tenentURL +
-                                "/sites/vti_ww_00_9292_spfx/"
-                            }}
-                          />
-                        )}
-                      />
-                      )
-                    </Switch>
-                  )}
-                </Grid>
-              </Router>
-            </Grid>
+                </Router>
+              </Grid>
+            // </MuiThemeProvider>
           ) : (
             <div className="conatiner">
               <img

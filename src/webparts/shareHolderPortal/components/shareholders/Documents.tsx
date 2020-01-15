@@ -87,7 +87,7 @@ export class Documents extends React.Component<any, any> {
                           <Table aria-label="simple table">
                             <TableHead className={styles.docTblHead}>
                               <TableRow style={{ color: "#fffff" }}>
-                              <TableCell className={styles.docTblCell}>Name</TableCell>
+                              <TableCell className={styles.docTblCell}>Document Name</TableCell>
                                 <TableCell className={styles.docTblCell} align="right">
                                   Last Modified
                                 </TableCell>

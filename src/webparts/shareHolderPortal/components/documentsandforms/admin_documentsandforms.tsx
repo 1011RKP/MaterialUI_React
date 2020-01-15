@@ -1,3 +1,5 @@
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Avatar,
   Divider,
@@ -469,12 +471,12 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                 <div style={{ padding: "10px" }}>
                   <React.Fragment>
                     <Table aria-label="simple table">
-                      <TableHead style={{ backgroundColor: "#ff9800" }}>
+                      <TableHead style={{ backgroundColor: "#e0e0e0" }}>
                         <TableRow>
-                          <TableCell style={{ color: "white" }}>
+                          <TableCell style={{ color: "black" }}>
                             Title
                           </TableCell>
-                          <TableCell align="right" style={{ color: "white" }}>
+                          <TableCell align="right" style={{ color: "black" }}>
                             Created
                           </TableCell>
                         </TableRow>
@@ -488,7 +490,9 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                                 target="_blank"
                                 href={doc.EncodedAbsUrl}
                               >
-                                <PictureAsPdfIcon className={styles.docPDF} />
+                                <FontAwesomeIcon
+                                  icon={faFilePdf}  className={styles.docPDF}
+                                />{" "}
                                 {doc.BaseName}
                               </a>
                             </TableCell>
@@ -641,7 +645,7 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                                Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -661,9 +665,13 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                                       target="_blank"
                                       href={doc.EncodedAbsUrl}
                                     >
-                                      <PictureAsPdfIcon
+                                      {/* <PictureAsPdfIcon
                                         className={styles.docPDF}
-                                      />
+                                      /> */}
+                                      <FontAwesomeIcon
+                                        icon={faFilePdf}
+                                        className={styles.docPDF}
+                                      />{" "}
                                       {doc.BaseName}
                                     </a>
                                   </TableCell>
@@ -731,7 +739,7 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                                Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -750,9 +758,13 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                                     target="_blank"
                                     href={doc.EncodedAbsUrl}
                                   >
-                                    <PictureAsPdfIcon
+                                    {/* <PictureAsPdfIcon
                                       className={styles.docPDF}
-                                    />
+                                    /> */}
+                                    <FontAwesomeIcon
+                                        icon={faFilePdf}
+                                        className={styles.docPDF}
+                                      />{" "}
                                     {doc.BaseName}
                                   </a>
                                 </TableCell>
@@ -821,7 +833,7 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                                Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -840,9 +852,13 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                                     target="_blank"
                                     href={doc.EncodedAbsUrl}
                                   >
-                                    <PictureAsPdfIcon
+                                    {/* <PictureAsPdfIcon
                                       className={styles.docPDF}
-                                    />
+                                    /> */}
+                                    <FontAwesomeIcon
+                                        icon={faFilePdf}
+                                        className={styles.docPDF}
+                                      />{" "}
                                     {doc.BaseName}
                                   </a>
                                 </TableCell>
@@ -909,7 +925,7 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                                Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -929,9 +945,13 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                                       target="_blank"
                                       href={doc.EncodedAbsUrl}
                                     >
-                                      <PictureAsPdfIcon
+                                      {/* <PictureAsPdfIcon
                                         className={styles.docPDF}
-                                      />
+                                      /> */}
+                                      <FontAwesomeIcon
+                                        icon={faFilePdf}
+                                        className={styles.docPDF}
+                                      />{" "}
                                       {doc.BaseName}
                                     </a>
                                   </TableCell>
@@ -999,7 +1019,7 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                                Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -1019,9 +1039,13 @@ export class AdmindocumentsandForms extends React.Component<any, any> {
                                       target="_blank"
                                       href={doc.EncodedAbsUrl}
                                     >
-                                      <PictureAsPdfIcon
+                                      {/* <PictureAsPdfIcon
                                         className={styles.docPDF}
-                                      />
+                                      /> */}
+                                      <FontAwesomeIcon
+                                        icon={faFilePdf}
+                                        className={styles.docPDF}
+                                      />{" "}
                                       {doc.BaseName}
                                     </a>
                                   </TableCell>

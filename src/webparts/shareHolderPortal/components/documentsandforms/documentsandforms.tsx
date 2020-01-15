@@ -406,7 +406,7 @@ export class DocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                              Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -501,7 +501,7 @@ export class DocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                              Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -596,7 +596,7 @@ export class DocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                              Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -689,7 +689,7 @@ export class DocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                              Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -784,7 +784,7 @@ export class DocumentsandForms extends React.Component<any, any> {
                           >
                             <TableRow>
                               <TableCell className={styles.tblHeadCell}>
-                                Name
+                              Document Name
                               </TableCell>
                               <TableCell
                                 className={styles.tblHeadCell}
@@ -953,7 +953,7 @@ export class DocumentsandForms extends React.Component<any, any> {
                     >
                       <TableRow>
                         <TableCell className={styles.tblHeadCell}>
-                          Name
+                        Document Name
                         </TableCell>
                         <TableCell className={styles.tblHeadCell} align="right">
                           Last Modified
