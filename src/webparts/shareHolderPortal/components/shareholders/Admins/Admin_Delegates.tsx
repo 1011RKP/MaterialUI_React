@@ -404,6 +404,7 @@ export class AdminDelegates extends React.Component<any, any> {
                       <FormControl fullWidth style={{ margin: "10px" }}>
                         <CustomTextField
                           label="Delegate Email Address*"
+                          style={{background:"#eeeeee"}}
                           name="delegateEmailAddress"
                           value={this.state.delegateEmailAddress}
                           onChange={e => {
@@ -430,6 +431,7 @@ export class AdminDelegates extends React.Component<any, any> {
                       <FormControl fullWidth style={{ margin: "10px" }}>
                         <CustomTextField
                           label="Delegate First Name*"
+                          style={{background:"#eeeeee"}}
                           onChange={e => {
                             if (e.target.value === "") {
                               this.setState({
@@ -456,6 +458,7 @@ export class AdminDelegates extends React.Component<any, any> {
                       <FormControl fullWidth style={{ margin: "10px" }}>
                         <CustomTextField
                           label="Delegate Last Name*"
+                          style={{background:"#eeeeee"}}
                           onChange={e => {
                             if (e.target.value === "") {
                               this.setState({
@@ -973,17 +976,38 @@ export class AdminDelegates extends React.Component<any, any> {
                 </div>
                 <div className="row">
                   <div className="alert">
-                    <p
+                  <p
                       className={`${styles.electionsGeneralText} text-justify`}
                     >
                       Delegates are people such as trustees, accountants,
                       lawyers, or your family members who you allow to access
-                      this Shareholding information. All Delegates are able to
-                      see all the pages and documents for this Shareholding,
-                      except for listing of Delegates you invited. Delegates to
-                      whom you give Full Access also have the ability to act on
-                      your behalf within this Portal – they can change
-                      information such as the email or mailing addresses.
+                      this Shareholding information. All “Full Access” and “Read
+                      Only” delegates are able to see all the pages and
+                      documents for this Shareholding, except for the listing of
+                      delegates. They can also download all documents posted.
+                      <div className="row" style={{ clear: "both" }}>
+                        &nbsp;
+                      </div>
+                    </p>
+                    <p
+                      className={`${styles.electionsGeneralText} text-justify`}
+                    >
+                      Full Access delegates also have the ability to act on your
+                      behalf within this Portal – they can change information
+                      such as composite tax elections, email or mailing
+                      addresses.
+                      <div className="row" style={{ clear: "both" }}>
+                        &nbsp;
+                      </div>
+                    </p>
+                    <p
+                      className={`${styles.electionsGeneralText} text-justify`}
+                    >
+                      Email delegates are NOT able to access the Portal. Your
+                      authorization through the Portal allows the the
+                      Shareholder Services Office to communicate with them
+                      regarding your account and they will be included when we
+                      send email notifications to shareholders and delegates.
                     </p>
                   </div>
                 </div>

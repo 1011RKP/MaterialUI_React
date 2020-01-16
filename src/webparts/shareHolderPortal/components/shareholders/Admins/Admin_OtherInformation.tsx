@@ -45,19 +45,6 @@ export class AdminOtherInformation extends React.Component<any, any> {
   public CEOGroupDD = CEOGroup;
   public constructor(props: any, state: any) {
     super(props);
-    //this.getOtherInformation = this.getOtherInformation.bind(this);
-    // this.postOtherInformation = this.postOtherInformation.bind(this);
-    // this.updateOtherInformation = this.updateOtherInformation.bind(this);
-    //this.validateOtherInfromation = this.validateOtherInfromation.bind(this);
-    // this.shareholderAgreementInformation_HTML = this.shareholderAgreementInformation_HTML.bind(
-    //   this
-    // );
-    // this.reportClassifications_HTML = this.reportClassifications_HTML.bind(
-    //   this
-    // );
-    //this.ShareholderAgreementTypes = this.ShareholderAgreementTypes.bind(this);
-    //this.otherInformation_HTML = this.otherInformation_HTML.bind(this);
-    //this.onDateSelected = this.onDateSelected.bind(this);
     this.state = {
       properties: this.props.properties,
       shareholderID: this.props.properties.shareholderID,
@@ -342,9 +329,6 @@ export class AdminOtherInformation extends React.Component<any, any> {
       dividendPaymentType_Error: this.state.dividendPaymentType_Error,
       taxDistributionPaymentType_Error: this.state
         .taxDistributionPaymentType_Error,
-      dividendPaymentAccount_Error: this.state.dividendPaymentAccount_Error,
-      taxDistributionPaymentAccount_Error: this.state
-        .taxDistributionPaymentAccount_Error,
       dateBecameShareholder_Error: this.state.dateBecameShareholder_Error,
       shareholderAgreement_Error: this.state.shareholderAgreement_Error,
       accreditedInvestor_Error: this.state.accreditedInvestor_Error,
@@ -363,18 +347,6 @@ export class AdminOtherInformation extends React.Component<any, any> {
       error.taxDistributionPaymentType_Error = true;
     } else {
       error.taxDistributionPaymentType_Error = false;
-    }
-    if (this.state.dividendPaymentAccount === "") {
-      this.setState({ dividendPaymentAccount_Error: true });
-      error.dividendPaymentAccount_Error = true;
-    } else {
-      error.dividendPaymentAccount_Error = false;
-    }
-    if (this.state.taxDistributionPaymentAccount === "") {
-      this.setState({ taxDistributionPaymentAccount_Error: true });
-      error.taxDistributionPaymentAccount_Error = true;
-    } else {
-      error.taxDistributionPaymentAccount_Error = false;
     }
     if (this.state.dateBecameShareholder === "") {
       this.setState({ dateBecameShareholder_Error: true });
@@ -527,7 +499,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
               <div className="row">
                 <div className="col-md-12">
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <TextField
+                    <CustomTextField
                       label="Date Became Vested SCorp Shareholder"
                       name="dateBecameVestedSCorpShareholder"
                       value={this.state.dateBecameVestedSCorpShareholder}
@@ -550,7 +522,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     />
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <TextField
+                    <CustomTextField
                       label="Date Became Shareholder"
                       name="dateBecameShareholder"
                       value={this.state.dateBecameShareholder}
@@ -578,7 +550,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     />
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <TextField
+                    <CustomTextField
                       label="Date Ceased To Be A Shareholder"
                       name="dateCeasedToBeAShareholder"
                       value={this.state.dateCeasedToBeAShareholder}
@@ -674,7 +646,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     </div>
                   </div>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <TextField
+                    <CustomTextField
                       label="Call Right No"
                       onChange={e => {
                         const re = /^[0-9\b]+$/;
@@ -691,7 +663,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     />
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <TextField
+                    <CustomTextField
                       label="Call Right Date"
                       name="callRightDate"
                       value={this.state.callRightDate}
@@ -1107,13 +1079,13 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     )}
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <TextField
+                    <CustomTextField
                       label="Dividend Payment Account"
                       onChange={e => {
                         if (e.target.value === "") {
                           this.setState({
                             dividendPaymentAccount: e.target.value,
-                            dividendPaymentAccount_Error: true
+                            dividendPaymentAccount_Error: false
                           });
                         } else {
                           this.setState({
@@ -1181,7 +1153,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     )}
                   </FormControl>
                   <FormControl fullWidth style={{ margin: "10px" }}>
-                    <TextField
+                    <CustomTextField
                       disabled={false}
                       label="Tax Distribution Payment Account"
                       name="taxDistributionPaymentAccount"
@@ -1189,7 +1161,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                         if (e.target.value === "") {
                           this.setState({
                             taxDistributionPaymentAccount: e.target.value,
-                            taxDistributionPaymentAccount_Error: true
+                            taxDistributionPaymentAccount_Error: false
                           });
                         } else {
                           this.setState({
@@ -1238,7 +1210,6 @@ export class AdminOtherInformation extends React.Component<any, any> {
     return (
       <div className={styles.shareholders}>
         <div className={styles.otherInformation}>
-        <ThemeProvider theme={outerTheme}>
           <div className="row-fluid" style={{ overflow: "hidden" }}>
             <div className="row" style={{ marginTop: "10px" }}>
               <div className="col-md-12">{otherInformation}</div>
@@ -1310,8 +1281,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
               </div>
             </div>
           </div>
-        </ThemeProvider>
-        </div>
+         </div>
       </div>
     );
   }

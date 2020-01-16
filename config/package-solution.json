@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
     "name": "wawa-shareholderportal-app",
-    "id": "12a131b6-02f8-46ef-79a9-238e1e48777a",
-    "version": "1.0.0.1",
+    "id": "12a000b6-02f8-46ef-79a9-238e1e48777a",
+    "version": "2.0.0.0",
     "includeClientSideAssets": false
   },
   "paths": {

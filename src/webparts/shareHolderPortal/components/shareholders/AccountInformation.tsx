@@ -987,12 +987,7 @@ export class AccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <InputLabel
-                                      style={{
-                                        marginLeft: "15px",
-                                        color: "#976340"
-                                      }}
-                                    >
+                                    <InputLabel>
                                       Ownership Type{" "}
                                     </InputLabel>
                                     <Select

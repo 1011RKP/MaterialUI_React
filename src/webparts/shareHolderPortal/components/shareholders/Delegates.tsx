@@ -436,6 +436,7 @@ export class Delegates extends React.Component<any, any> {
                       <FormControl fullWidth style={{ margin: "10px" }}>
                         <CustomTextField
                           label="Delegate Email Address*"
+                          style={{background:"#eeeeee"}}
                           name="delegateEmailAddress"
                           value={this.state.delegateEmailAddress}
                           onChange={e => {
@@ -462,6 +463,7 @@ export class Delegates extends React.Component<any, any> {
                       <FormControl fullWidth style={{ margin: "10px" }}>
                         <CustomTextField
                           label="Delegate First Name*"
+                          style={{background:"#eeeeee"}}
                           onChange={e => {
                             if (e.target.value === "") {
                               this.setState({
@@ -488,6 +490,7 @@ export class Delegates extends React.Component<any, any> {
                       <FormControl fullWidth style={{ margin: "10px" }}>
                         <CustomTextField
                           label="Delegate Last Name*"
+                          style={{background:"#eeeeee"}}
                           onChange={e => {
                             if (e.target.value === "") {
                               this.setState({

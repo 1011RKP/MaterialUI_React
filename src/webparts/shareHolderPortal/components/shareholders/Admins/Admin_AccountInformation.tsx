@@ -639,7 +639,6 @@ export class AdminAccountInformation extends React.Component<any, any> {
     return (
       <div className={styles.shareholders}>
         <div>
-        <ThemeProvider theme={outerTheme}>
           <div className="row">
             <React.Fragment>
               <Snackbar
@@ -717,7 +716,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Shareholding Name"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -747,7 +746,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Primary Shareholding Contact*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -785,7 +784,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Shareholding Email Address*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -823,7 +822,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Shareholding Short Name"
                                       onChange={e => {
                                         this.setState({
@@ -840,7 +839,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   >
                                     <div className="row">
                                       <div className="col-sm-6">
-                                        <TextField
+                                        <CustomTextField
                                           fullWidth
                                           label="Phone"
                                           onChange={e => {
@@ -893,7 +892,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   >
                                     <div className="row">
                                       <div className="col-sm-6">
-                                        <TextField
+                                        <CustomTextField
                                           fullWidth
                                           label="Phone1"
                                           onChange={e => {
@@ -946,7 +945,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Merger ID"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1031,7 +1030,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Trust Type"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1060,7 +1059,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="S-Corp Family"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1104,7 +1103,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Document Mailing Label Addressee 1*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1143,7 +1142,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Document Mailing Label Addressee 2"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1182,7 +1181,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Document Mailing Label Addressee 3"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1221,7 +1220,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Document Mailing Address Line 1*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1259,7 +1258,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Document Mailing Address Line 2"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1297,7 +1296,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                     fullWidth
                                     style={{ margin: "10px" }}
                                   >
-                                    <TextField
+                                    <CustomTextField
                                       label="Document Mailing City*"
                                       onChange={e => {
                                         if (e.target.value === "") {
@@ -1381,7 +1380,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   >
                                     <div className="row">
                                       <div className="col-sm-6">
-                                        <TextField
+                                        <CustomTextField
                                           fullWidth
                                           label="Document Mailing Zip*"
                                           onChange={e => {
@@ -1423,7 +1422,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                         />
                                       </div>
                                       <div className="col-sm-6">
-                                        <TextField
+                                        <CustomTextField
                                           style={{ marginTop: "16px" }}
                                           fullWidth
                                           onChange={e => {
@@ -1589,7 +1588,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <TextField
+                                  <CustomTextField
                                     label="Permanent Tax Address Line1"
                                     onChange={e => {
                                       if (e.target.value === "") {
@@ -1623,7 +1622,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <TextField
+                                  <CustomTextField
                                     label="Permanent Tax Address Line2"
                                     onChange={e => {
                                       if (e.target.value === "") {
@@ -1657,7 +1656,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <TextField
+                                  <CustomTextField
                                     label="Permanent Tax City"
                                     onChange={e => {
                                       if (e.target.value === "") {
@@ -1734,7 +1733,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                 >
                                   <div className="row">
                                     <div className="col-sm-6">
-                                      <TextField
+                                      <CustomTextField
                                         fullWidth
                                         label="Permanent Tax Zip"
                                         onChange={e => {
@@ -1771,7 +1770,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                       />
                                     </div>
                                     <div className="col-sm-6">
-                                      <TextField
+                                      <CustomTextField
                                         style={{ marginTop: "16px" }}
                                         fullWidth
                                         onChange={e => {
@@ -1887,7 +1886,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <TextField
+                                  <CustomTextField
                                     label="Trustee Name(s)"
                                     onChange={event => {
                                       this.setState({
@@ -2269,7 +2268,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <TextField
+                                  <CustomTextField
                                     label="UnRestricted Shares"
                                     onChange={e => {
                                       this.setState({
@@ -2284,7 +2283,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <TextField
+                                  <CustomTextField
                                     label="Restricted Shares"
                                     onChange={e => {
                                       this.setState({
@@ -2299,7 +2298,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <TextField
+                                  <CustomTextField
                                     label="Vested Options"
                                     onChange={e => {
                                       this.setState({
@@ -2314,7 +2313,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                   fullWidth
                                   style={{ margin: "10px" }}
                                 >
-                                  <TextField
+                                  <CustomTextField
                                     label="UnVested Options"
                                     onChange={e => {
                                       this.setState({
@@ -2407,7 +2406,6 @@ export class AdminAccountInformation extends React.Component<any, any> {
               </Stepper>
             </div>
           </Paper>
-        </ThemeProvider>
         </div>
       </div>
     );

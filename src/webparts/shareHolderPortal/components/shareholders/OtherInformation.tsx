@@ -55,8 +55,8 @@ export class OtherInformation extends React.Component<any, any> {
               otherInfoCollection: d,
               dividendPaymentType: d[0].dividendPaymentType,
               taxDistributionPaymentType: d[0].taxDistributionPayment,
-              dividendPaymentAccount: "",
-              taxDistributionPaymentAccount: ""
+              dividendPaymentAccount: d[0].dividendPaymentAccount,
+              taxDistributionPaymentAccount: d[0].taxDistributionPaymentAccount
             }));
           } else {
             this.setState(prevState => ({
