@@ -981,7 +981,6 @@ export class AdminElections extends React.Component<any, any> {
     return (
       <div className={styles.shareholders}>
         <div className={styles.elections}>
-        <ThemeProvider theme={outerTheme}>
           <form ref={e => this.electionRef} onSubmit={e => e.preventDefault()}>
             <Paper className={styles.paper}>
               <Typography variant="h5" className={styles.electionSubHeadings}>
@@ -1143,7 +1142,6 @@ export class AdminElections extends React.Component<any, any> {
               </div>
             </Paper>
           </form>
-        </ThemeProvider>
         </div>
       </div>
     );
