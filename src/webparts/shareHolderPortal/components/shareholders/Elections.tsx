@@ -184,23 +184,44 @@ export class Elections extends React.Component<any, any> {
         electionInformation = _.filter(this.state.electionInformation, (val) => {
           return val.TaxYear === yr;
         });
-        this.setState({
-          ele_taxYear: yr,
-          ele_taxYear_Error: false,
-          de_disabled: true,
-          md_disabled: true,
-          nj_disabled: true,
-          pa_disabled: true,
-          va_disabled: true,
-          submitElection_Btn:true,
-          state_slected_disabled:true,
-          va_Val: electionInformation[0].Virginia,
-          de_Val: electionInformation[0].Delaware,
-          md_Val: electionInformation[0].Maryland,
-          pa_Val: electionInformation[0].Pennsylvania,
-          nj_Val: electionInformation[0].NewJersey,
-          state_slected:electionInformation[0].StateforStateTaxes
-        });
+        if (electionInformation.length > 0) {
+          this.setState({
+            ele_taxYear: yr,
+            ele_taxYear_Error: false,
+            de_disabled: true,
+            md_disabled: true,
+            nj_disabled: true,
+            pa_disabled: true,
+            va_disabled: true,
+            submitElection_Btn:true,
+            state_slected_disabled:true,
+            va_Val: electionInformation[0].Virginia,
+            de_Val: electionInformation[0].Delaware,
+            md_Val: electionInformation[0].Maryland,
+            pa_Val: electionInformation[0].Pennsylvania,
+            nj_Val: electionInformation[0].NewJersey,
+            state_slected:electionInformation[0].StateforStateTaxes
+          });
+        } else {
+          this.setState({
+            ele_taxYear: yr,
+            ele_taxYear_Error: false,
+            de_disabled: true,
+            md_disabled: true,
+            nj_disabled: true,
+            pa_disabled: true,
+            va_disabled: true,
+            submitElection_Btn:true,
+            state_slected_disabled:true,
+            va_Val: "none",
+            de_Val: "none",
+            md_Val: "none",
+            pa_Val: "none",
+            nj_Val: "none",
+            state_slected:"NA"
+          });
+        }
+
       }
     }
   }

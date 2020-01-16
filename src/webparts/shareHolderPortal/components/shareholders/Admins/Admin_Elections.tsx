@@ -192,16 +192,30 @@ export class AdminElections extends React.Component<any, any> {
           return val.TaxYear === yr;
         });
         console.log(electionInformation);
-        this.setState({
-          ele_taxYear: yr,
-          ele_taxYear_Error: false,
-          va_Val: electionInformation[0].Virginia,
-          de_Val: electionInformation[0].Delaware,
-          md_Val: electionInformation[0].Maryland,
-          pa_Val: electionInformation[0].Pennsylvania,
-          nj_Val: electionInformation[0].NewJersey,
-          state_slected:electionInformation[0].StateforStateTaxes
-        });
+        if (electionInformation.length > 0) {
+          this.setState({
+            ele_taxYear: yr,
+            ele_taxYear_Error: false,
+            va_Val: electionInformation[0].Virginia,
+            de_Val: electionInformation[0].Delaware,
+            md_Val: electionInformation[0].Maryland,
+            pa_Val: electionInformation[0].Pennsylvania,
+            nj_Val: electionInformation[0].NewJersey,
+            state_slected:electionInformation[0].StateforStateTaxes
+          });
+        }else{
+          this.setState({
+            ele_taxYear: yr,
+            ele_taxYear_Error: false,
+            va_Val: "none",
+            de_Val: "none",
+            md_Val: "none",
+            pa_Val: "none",
+            nj_Val: "none",
+            state_slected:"NA"
+          });
+        }
+
       }
     }
   }
@@ -596,14 +610,13 @@ export class AdminElections extends React.Component<any, any> {
               )}
             </FormControl>
           </div>
-          <div className="col-sm-1">
+          <div className="col-sm-1 align-self-end">
             <a href={this.state.shareholderAgreementLink} target="_blank">
               <FontAwesomeIcon
                 style={{
                   marginLeft: "3px",
                   color: "#007bff",
-                  fontSize: "14px",
-                  marginTop: "40"
+                  fontSize: "14px"
                 }}
                 icon={faExternalLinkAlt}
               />

@@ -1008,7 +1008,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                           )}
                                         </Select>
                                       </div>
-                                      <div className="col-sm-1">
+                                      <div className="col-sm-1 align-self-end">
                                         <a
                                           href={this.state.ownershipTypesLink}
                                           target="_blank"
@@ -1017,8 +1017,7 @@ export class AdminAccountInformation extends React.Component<any, any> {
                                             style={{
                                               marginLeft: "3px",
                                               color: "#007bff",
-                                              fontSize: "14px",
-                                              marginTop: "30px"
+                                              fontSize: "14px"
                                             }}
                                             icon={faExternalLinkAlt}
                                           />

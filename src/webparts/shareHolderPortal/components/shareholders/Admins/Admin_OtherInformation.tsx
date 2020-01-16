@@ -628,7 +628,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                         )}
                       </FormControl>
                     </div>
-                    <div className="col-sm-1">
+                    <div className="col-sm-1 align-self-end">
                       <a
                         href={this.state.shareholderAgreementLink}
                         target="_blank"
@@ -637,8 +637,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                           style={{
                             marginLeft: "3px",
                             color: "#007bff",
-                            fontSize: "14px",
-                            marginTop: "30"
+                            fontSize: "14px"
                           }}
                           icon={faExternalLinkAlt}
                         />
@@ -824,8 +823,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
                         color:
                           this.state.mdaGroup_Error !== true
                             ? "#976340"
-                            : "red",
-                        marginLeft: "15px"
+                            : "red"
                       }}
                       error={this.state.mdaGroup_Error}
                     >
@@ -865,14 +863,13 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     )}
                   </FormControl>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-1 align-self-end">
                   <a href={this.state.mdaGroupLink} target="_blank">
                     <FontAwesomeIcon
                       style={{
                         marginLeft: "3px",
                         color: "#007bff",
-                        fontSize: "14px",
-                        marginTop: "40"
+                        fontSize: "14px"
                       }}
                       icon={faExternalLinkAlt}
                     />
@@ -888,7 +885,6 @@ export class AdminOtherInformation extends React.Component<any, any> {
                   >
                     <InputLabel
                       style={{
-                        marginLeft: "15px",
                         color:
                           this.state.proxyGroup_Error !== true
                             ? "#976340"
@@ -931,14 +927,13 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     )}
                   </FormControl>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-1 align-self-end">
                   <a href={this.state.proxyGroupLink} target="_blank">
                     <FontAwesomeIcon
                       style={{
                         marginLeft: "3px",
                         color: "#007bff",
-                        fontSize: "14px",
-                        marginTop: "40"
+                        fontSize: "14px"
                       }}
                       icon={faExternalLinkAlt}
                     />
@@ -954,7 +949,6 @@ export class AdminOtherInformation extends React.Component<any, any> {
                   >
                     <InputLabel
                       style={{
-                        marginLeft: "15px",
                         color:
                           this.state.CEOGroup_Error !== true ? "#976340" : "red"
                       }}
@@ -997,14 +991,13 @@ export class AdminOtherInformation extends React.Component<any, any> {
                     )}
                   </FormControl>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-1 align-self-end">
                   <a href={this.state.ceoReportGroupLink} target="_blank">
                     <FontAwesomeIcon
                       style={{
                         marginLeft: "3px",
                         color: "#007bff",
-                        fontSize: "14px",
-                        marginTop: "40"
+                        fontSize: "14px"
                       }}
                       icon={faExternalLinkAlt}
                     />
