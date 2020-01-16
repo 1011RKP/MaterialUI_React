@@ -211,14 +211,14 @@ export class MyShareholdings extends React.Component<any, any> {
                           />
                         </FormControl>
                         <br/>
-                      <ThemeProvider theme={outerTheme}>
+                      {/* <ThemeProvider theme={outerTheme}>
                         <FormControl fullWidth>
                           <TextField
                             onChange={this.handleSearch}
                             label="Search by Account ID..."
                           />
                         </FormControl>
-                      </ThemeProvider>
+                      </ThemeProvider> */}
                     </div>
                     <Router>
                       <Table

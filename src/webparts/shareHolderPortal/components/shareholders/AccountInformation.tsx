@@ -165,7 +165,7 @@ export class AccountInformation extends React.Component<any, any> {
           });
         }
       });
-  }
+  };
 
   public getAccountInfromation = (id: any) => {
     if (id) {
@@ -276,14 +276,44 @@ export class AccountInformation extends React.Component<any, any> {
                 d[0].primaryHouseholdMailingAccount
               )
             });
-          }
-          else{
-            this.setState({
-              shareholdingName:this.state.properties.shareholdingName
-            })
+          } else {
+            if (this.state.properties.shareholdingName !== null) {
+              this.setState({
+                shareholdingName: this.state.properties.shareholdingName
+              });
+            } else {
+              this.getShareholdingName();
+            }
           }
         });
     }
+  }
+
+  public getShareholdingName = () => {
+    let newWeb = new Web(this.state.properties.tenentURL);
+    newWeb.lists
+      .getByTitle("Shareholdings")
+      .items.select(
+        "Title",
+        "unrestrictedShares",
+        "restrictedShares",
+        "vestedOptions",
+        "unvestedOptions",
+        "shares",
+        "options",
+        "shareholderID"
+      )
+      .orderBy("Title", true)
+      .top(1)
+      .filter("shareholderID eq '" + this.state.properties.shareholderID + "'")
+      .get()
+      .then(d => {
+        if (d.length > 0) {
+          this.setState({
+            shareholdingName: d[0].Title
+          });
+        }
+      });
   }
 
   public postAccountInformation = () => {
@@ -305,25 +335,43 @@ export class AccountInformation extends React.Component<any, any> {
         trustType: this.state.trustType.toString(),
         scorpFamily: this.state.scorpFamily.toString(),
         documentMailingLabelAddressee1: this.state.documentMailingLabelAddressee1.toString(),
-        documentMailingLabelAddressee2: this.state.documentMailingLabelAddressee2 !== "" ? this.state.documentMailingLabelAddressee2.toString() : null,
-        documentMailingLabelAddressee3: this.state.documentMailingLabelAddressee3 !== "" ? this.state.documentMailingLabelAddressee3.toString() : null,
+        documentMailingLabelAddressee2:
+          this.state.documentMailingLabelAddressee2 !== ""
+            ? this.state.documentMailingLabelAddressee2.toString()
+            : null,
+        documentMailingLabelAddressee3:
+          this.state.documentMailingLabelAddressee3 !== ""
+            ? this.state.documentMailingLabelAddressee3.toString()
+            : null,
         documentMailingAddressLine1: this.state.documentMailingAddressLine1.toString(),
-        documentMailingAddressLine2: this.state.documentMailingAddressLine2 !== "" ? this.state.documentMailingAddressLine2.toString() : null,
+        documentMailingAddressLine2:
+          this.state.documentMailingAddressLine2 !== ""
+            ? this.state.documentMailingAddressLine2.toString()
+            : null,
         documentMailingCity: this.state.documentMailingCity.toString(),
         documentMailingState: this.state.documentMailingState.toString(),
         documentMailingZip:
           this.state.documentMailingZip.toString() +
-          "-" +
-          this.state.documentMailingZip1 !== "" ? this.state.documentMailingZip1.toString() : "",
+            "-" +
+            this.state.documentMailingZip1 !==
+          ""
+            ? this.state.documentMailingZip1.toString()
+            : "",
         documentMailingPriorityMailingMe: this.state.documentMailingPriorityMailingMethod.toString(),
         permanentTaxAddressLine1: this.state.permanentTaxAddressLine1.toString(),
-        permanentTaxAddressLine2: this.state.permanentTaxAddressLine2 !== "" ? this.state.permanentTaxAddressLine2.toString() : null,
+        permanentTaxAddressLine2:
+          this.state.permanentTaxAddressLine2 !== ""
+            ? this.state.permanentTaxAddressLine2.toString()
+            : null,
         permanentTaxCity: this.state.permanentTaxCity.toString(),
         permanentTaxState: this.state.permanentTaxState.toString(),
         permanentTaxZip:
           this.state.permanentTaxZip.toString() +
-          "-" +
-          this.state.permanentTaxZip1 !== "" ? this.state.permanentTaxZip1.toString() : "",
+            "-" +
+            this.state.permanentTaxZip1 !==
+          ""
+            ? this.state.permanentTaxZip1.toString()
+            : "",
         permanentTaxPriorityMailingMetho: this.state.permanentTaxPriorityMailingMethod.toString(),
         trusteeName: this.state.trusteeName.toString(),
         allPaperlessElection: this.state.allPaperlessElection.toString(),
@@ -363,25 +411,43 @@ export class AccountInformation extends React.Component<any, any> {
         trustType: this.state.trustType.toString(),
         scorpFamily: this.state.scorpFamily.toString(),
         documentMailingLabelAddressee1: this.state.documentMailingLabelAddressee1.toString(),
-        documentMailingLabelAddressee2: this.state.documentMailingLabelAddressee2 !== "" ? this.state.documentMailingLabelAddressee2.toString() : null,
-        documentMailingLabelAddressee3: this.state.documentMailingLabelAddressee3 !== "" ? this.state.documentMailingLabelAddressee3.toString() : null,
+        documentMailingLabelAddressee2:
+          this.state.documentMailingLabelAddressee2 !== ""
+            ? this.state.documentMailingLabelAddressee2.toString()
+            : null,
+        documentMailingLabelAddressee3:
+          this.state.documentMailingLabelAddressee3 !== ""
+            ? this.state.documentMailingLabelAddressee3.toString()
+            : null,
         documentMailingAddressLine1: this.state.documentMailingAddressLine1.toString(),
-        documentMailingAddressLine2: this.state.documentMailingAddressLine2 !== "" ? this.state.documentMailingAddressLine2.toString() : null,
+        documentMailingAddressLine2:
+          this.state.documentMailingAddressLine2 !== ""
+            ? this.state.documentMailingAddressLine2.toString()
+            : null,
         documentMailingCity: this.state.documentMailingCity.toString(),
         documentMailingState: this.state.documentMailingState.toString(),
         documentMailingZip:
           this.state.documentMailingZip.toString() +
-          "-" +
-          this.state.documentMailingZip1 !== "" ? this.state.documentMailingZip1.toString() : "",
+            "-" +
+            this.state.documentMailingZip1 !==
+          ""
+            ? this.state.documentMailingZip1.toString()
+            : "",
         documentMailingPriorityMailingMe: this.state.documentMailingPriorityMailingMethod.toString(),
         permanentTaxAddressLine1: this.state.permanentTaxAddressLine1.toString(),
-        permanentTaxAddressLine2: this.state.permanentTaxAddressLine2 !== "" ? this.state.permanentTaxAddressLine2.toString() : null,
+        permanentTaxAddressLine2:
+          this.state.permanentTaxAddressLine2 !== ""
+            ? this.state.permanentTaxAddressLine2.toString()
+            : null,
         permanentTaxCity: this.state.permanentTaxCity.toString(),
         permanentTaxState: this.state.permanentTaxState.toString(),
         permanentTaxZip:
           this.state.permanentTaxZip.toString() +
-          "-" +
-          this.state.permanentTaxZip1 !== "" ? this.state.permanentTaxZip1.toString() : "",
+            "-" +
+            this.state.permanentTaxZip1 !==
+          ""
+            ? this.state.permanentTaxZip1.toString()
+            : "",
         permanentTaxPriorityMailingMetho: this.state.permanentTaxPriorityMailingMethod.toString(),
         trusteeName:
           this.state.trusteeName !== undefined
@@ -585,7 +651,7 @@ export class AccountInformation extends React.Component<any, any> {
     return (
       <div className={styles.shareholders}>
         <div>
-        <ThemeProvider theme={outerTheme}>
+          {/* <ThemeProvider theme={outerTheme}> */}
           <div className="row">
             <React.Fragment>
               <Snackbar
@@ -2209,7 +2275,7 @@ export class AccountInformation extends React.Component<any, any> {
               </Stepper>
             </div>
           </Paper>
-        </ThemeProvider>
+          {/* </ThemeProvider> */}
         </div>
       </div>
     );

@@ -83,7 +83,8 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
           } else {
             this.setState({
               ShareholdingsCol: d[0],
-              isDeligate:false
+              isDeligate:false,
+              shareholdingName: d[0].Title
             });
           }
         }
@@ -270,10 +271,10 @@ export class MyShareholdingsDetails extends React.Component<any, any> {
     let information_HTML = this.information();
     let tabs_HTML = (
       <div>
-        {this.state.shareholderID !== undefined &&
-        this.state.shareholderID !== null &&
-        this.state.shareholdingName !== undefined &&
+        {this.state.shareholdingName !== undefined &&
         this.state.shareholdingName !== null ? (
+          // {this.state.shareholderID !== undefined &&
+          //   this.state.shareholderID !== null ? (
           <React.Fragment>
             <AppBar position="static" style={{ background: "#eeeeee" }}>
               {information_HTML}

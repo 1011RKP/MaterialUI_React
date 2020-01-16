@@ -4,7 +4,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Paper from "@material-ui/core/Paper";
-import { MuiThemeProvider } from "@material-ui/core/styles";
+import { MuiThemeProvider, ThemeProvider } from "@material-ui/core/styles";
 import DescriptionIcon from "@material-ui/icons/Description";
 import HelpIcon from "@material-ui/icons/Help";
 import HomeIcon from "@material-ui/icons/Home";
@@ -21,7 +21,7 @@ import { Panel } from "office-ui-fabric-react/lib/Panel";
 import * as React from "react";
 import { HashRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { AdminReportsHome } from "./adminReports/AdminReportsHome";
-import { outerTheme } from "./common/common";
+import { shareholderInputTheam } from "./common/common";
 import { AdminDashBoard } from "./dashboard/admin_Dashboard";
 import { DashBoard } from "./dashboard/dashboard";
 import { AdmindocumentsandForms } from "./documentsandforms/admin_documentsandForms";
@@ -34,6 +34,7 @@ import { AdminShareholdings } from "./shareholders/Admins/Admin_Shareholdings";
 import { MyShareholdings } from "./shareholders/MyShareholdings";
 import { MyShareholdingsDetails } from "./shareholders/MyShareholdingsDetails";
 
+
 SPComponentLoader.loadCss(
   "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 );
@@ -42,17 +43,9 @@ export default class ShareHolderPortal extends React.Component<
   IShareHolderPortalProps,
   any
 > {
-  // public HelpCenter = HelpCenter;
-  // public Investmenttax = Investmenttax;
-  // public Shareholders = Shareholders;
-  // public DashBoard = DashBoard;
+
   public constructor(props: IShareHolderPortalProps, state: any) {
     super(props);
-    // this.getAdminShareholdingDetails = this.getAdminShareholdingDetails.bind(this);
-    // this.loggedInUserAccountID = this.loggedInUserAccountID.bind(this);
-    // this.getUserDetails = this.getUserDetails.bind(this);
-    // this.dismissPanel = this.dismissPanel.bind(this);
-    // this.openPanel = this.openPanel.bind(this);
     this.state = {
       shareholdingCollection: [],
       setIsOpen: false,
@@ -197,7 +190,7 @@ export default class ShareHolderPortal extends React.Component<
       <div className={styles.shareHolderPortal}>
         <div className={styles.root}>
           {this.state.shareholderID !== null ? (
-            // <MuiThemeProvider theme={outerTheme}>
+            <ThemeProvider theme={shareholderInputTheam}>
               <Grid container spacing={3}>
                 <Router>
                   <div className="hidden-md-up">
@@ -607,7 +600,7 @@ export default class ShareHolderPortal extends React.Component<
                   </Grid>
                 </Router>
               </Grid>
-            // </MuiThemeProvider>
+            </ThemeProvider>
           ) : (
             <div className="conatiner">
               <img
