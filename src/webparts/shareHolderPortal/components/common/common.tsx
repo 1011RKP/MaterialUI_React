@@ -40,20 +40,18 @@ export const CustomSelect = withStyles({
 
 export const outerTheme = createMuiTheme({
   overrides: {
-    MuiInputBase:{
-      input:{
-        //zIndex:-1
-        "&$after": {
-          zIndex: 1,
-        },
-        "&$before": {
-          zIndex: -1,
-        },
+    MuiFormControl: {
+      root: {
+        zIndex: 1
       }
     },
-    MuiInput:{
-      underline:{
-        //borderBottom: "2px solid #976340",
+    MuiInputBase: {
+      input: {
+        zIndex: -1
+      }
+    },
+    MuiInput: {
+      underline: {
         "&:after": {
           borderBottom: "1px solid #976340!important"
         },
@@ -79,12 +77,6 @@ export const outerTheme = createMuiTheme({
     },
     MuiInputLabel: {
       root: {
-        "&$after": {
-          zIndex: 1,
-        },
-        "&$before": {
-          zIndex: -1,
-        },
         cursor: "auto",
         color: "#976340",
         "&$focused": {
@@ -92,9 +84,9 @@ export const outerTheme = createMuiTheme({
         },
         "& .MuiInput-underline:after": {
           borderBottomColor: "#976340"
-        },
+        }
       }
-    },
+    }
   },
   palette: {
     primary: {
@@ -111,6 +103,9 @@ export const outerTheme = createMuiTheme({
 
 export const CustomTextField = withStyles({
   root: {
+    "& .MuiFormControl-root":{
+      zIndex:1
+    },
     '& .MuiInputBase-input':{
       zIndex:-1,
       color: 'black',
@@ -445,60 +440,6 @@ export const state_DD = [
   { key: "Other", text: "Other" }
 ];
 
-// export const state_DD = [
-//   { key: "Alabama", text: "Alabama" },
-//   { key: "Alaska", text: "Alaska" },
-//   { key: "Arizona", text: "Arizona" },
-//   { key: "Arkansas", text: "Arkansas" },
-//   { key: "California", text: "California" },
-//   { key: "Colorado", text: "Colorado" },
-//   { key: "Connecticut", text: "Connecticut" },
-//   { key: "Delaware", text: "Delaware" },
-//   { key: "District Of Columbia", text: "District Of Columbia" },
-//   { key: "Florida", text: "Florida" },
-//   { key: "Georgia", text: "Georgia" },
-//   { key: "Hawaii", text: "Hawaii" },
-//   { key: "Idaho", text: "Idaho" },
-//   { key: "Illinois", text: "Illinois" },
-//   { key: "Indiana", text: "Indiana" },
-//   { key: "Iowa", text: "Iowa" },
-//   { key: "Kansas", text: "Kansas" },
-//   { key: "Kentucky", text: "Kentucky" },
-//   { key: "Louisiana", text: "Louisiana" },
-//   { key: "Maine", text: "Maine" },
-//   { key: "Maryland", text: "Maryland" },
-//   { key: "Massachusetts", text: "Massachusetts" },
-//   { key: "Michigan", text: "Michigan" },
-//   { key: "Minnesota", text: "Minnesota" },
-//   { key: "Mississippi", text: "Mississippi" },
-//   { key: "Missouri", text: "Missouri" },
-//   { key: "Montana", text: "Montana" },
-//   { key: "Nebraska", text: "Nebraska" },
-//   { key: "Nevada", text: "Nevada" },
-//   { key: "New Hampshire", text: "New Hampshire" },
-//   { key: "New Jersey", text: "New Jersey" },
-//   { key: "New Mexico", text: "New Mexico" },
-//   { key: "New York", text: "New York" },
-//   { key: "North Carolina", text: "North Carolina" },
-//   { key: "North Dakota", text: "North Dakota" },
-//   { key: "Ohio", text: "Ohio" },
-//   { key: "Oklahoma", text: "Oklahoma" },
-//   { key: "Oregon", text: "Oregon" },
-//   { key: "Pennsylvania", text: "Pennsylvania" },
-//   { key: "Rhode Island", text: "Rhode Island" },
-//   { key: "South Carolina", text: "South Carolina" },
-//   { key: "South Dakota", text: "South Dakota" },
-//   { key: "Tennessee", text: "Tennessee" },
-//   { key: "Texas", text: "Texas" },
-//   { key: "Utah", text: "Utah" },
-//   { key: "Vermont", text: "Vermont" },
-//   { key: "Virginia", text: "Virginia" },
-//   { key: "Washington", text: "Washington" },
-//   { key: "West Virginia", text: "West Virginia" },
-//   { key: "Wisconsin", text: "Wisconsin" },
-//   { key: "Wyoming", text: "Wyoming" }
-// ];
-
 export const PivotStyles: IPivotStyles = {
   linkContent: {},
   text: {},
@@ -577,3 +518,131 @@ export const Documents = [
     LastModified: "Apr 2, 2019"
   }
 ];
+
+
+
+// export const outerTheme = createMuiTheme({
+//   overrides: {
+//     MuiInputBase:{
+//       input:{
+//         //zIndex:-1
+//         "&$after": {
+//           zIndex: 1,
+//         },
+//         "&$before": {
+//           zIndex: -1,
+//         },
+//       }
+//     },
+//     MuiInput:{
+//       underline:{
+//         //borderBottom: "2px solid #976340",
+//         "&:after": {
+//           borderBottom: "1px solid #976340!important"
+//         },
+//         "&:before": {
+//           borderBottom: "1px solid #976340!important"
+//         }
+//       },
+//       root: {
+//         color: "black",
+//         borderColor: "#976340",
+//         "& after": {
+//           color: "black",
+//           borderColor: "#976340"
+//         },
+//         "& fieldset": {
+//           color: "black",
+//           borderColor: "#976340"
+//         },
+//         "& .MuiInput-underline:after": {
+//           borderBottomColor: "#976340"
+//         }
+//       }
+//     },
+//     MuiInputLabel: {
+//       root: {
+//         "&$after": {
+//           zIndex: 1,
+//         },
+//         "&$before": {
+//           zIndex: -1,
+//         },
+//         cursor: "auto",
+//         color: "#976340",
+//         "&$focused": {
+//           color: "#976340"
+//         },
+//         "& .MuiInput-underline:after": {
+//           borderBottomColor: "#976340"
+//         },
+//       }
+//     },
+//   },
+//   palette: {
+//     primary: {
+//       light: "#ab8266",
+//       main: "#976340",
+//       dark: "#69452c",
+//       contrastText: "#fff"
+//     },
+//     secondary: {
+//       main: "#cb2030"
+//     }
+//   }
+// });
+
+
+// export const state_DD = [
+//   { key: "Alabama", text: "Alabama" },
+//   { key: "Alaska", text: "Alaska" },
+//   { key: "Arizona", text: "Arizona" },
+//   { key: "Arkansas", text: "Arkansas" },
+//   { key: "California", text: "California" },
+//   { key: "Colorado", text: "Colorado" },
+//   { key: "Connecticut", text: "Connecticut" },
+//   { key: "Delaware", text: "Delaware" },
+//   { key: "District Of Columbia", text: "District Of Columbia" },
+//   { key: "Florida", text: "Florida" },
+//   { key: "Georgia", text: "Georgia" },
+//   { key: "Hawaii", text: "Hawaii" },
+//   { key: "Idaho", text: "Idaho" },
+//   { key: "Illinois", text: "Illinois" },
+//   { key: "Indiana", text: "Indiana" },
+//   { key: "Iowa", text: "Iowa" },
+//   { key: "Kansas", text: "Kansas" },
+//   { key: "Kentucky", text: "Kentucky" },
+//   { key: "Louisiana", text: "Louisiana" },
+//   { key: "Maine", text: "Maine" },
+//   { key: "Maryland", text: "Maryland" },
+//   { key: "Massachusetts", text: "Massachusetts" },
+//   { key: "Michigan", text: "Michigan" },
+//   { key: "Minnesota", text: "Minnesota" },
+//   { key: "Mississippi", text: "Mississippi" },
+//   { key: "Missouri", text: "Missouri" },
+//   { key: "Montana", text: "Montana" },
+//   { key: "Nebraska", text: "Nebraska" },
+//   { key: "Nevada", text: "Nevada" },
+//   { key: "New Hampshire", text: "New Hampshire" },
+//   { key: "New Jersey", text: "New Jersey" },
+//   { key: "New Mexico", text: "New Mexico" },
+//   { key: "New York", text: "New York" },
+//   { key: "North Carolina", text: "North Carolina" },
+//   { key: "North Dakota", text: "North Dakota" },
+//   { key: "Ohio", text: "Ohio" },
+//   { key: "Oklahoma", text: "Oklahoma" },
+//   { key: "Oregon", text: "Oregon" },
+//   { key: "Pennsylvania", text: "Pennsylvania" },
+//   { key: "Rhode Island", text: "Rhode Island" },
+//   { key: "South Carolina", text: "South Carolina" },
+//   { key: "South Dakota", text: "South Dakota" },
+//   { key: "Tennessee", text: "Tennessee" },
+//   { key: "Texas", text: "Texas" },
+//   { key: "Utah", text: "Utah" },
+//   { key: "Vermont", text: "Vermont" },
+//   { key: "Virginia", text: "Virginia" },
+//   { key: "Washington", text: "Washington" },
+//   { key: "West Virginia", text: "West Virginia" },
+//   { key: "Wisconsin", text: "Wisconsin" },
+//   { key: "Wyoming", text: "Wyoming" }
+// ];

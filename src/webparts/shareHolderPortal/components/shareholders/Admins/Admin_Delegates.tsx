@@ -31,12 +31,14 @@ import {
   CustomTextField,
   ErrorButton,
   SucessButton,
-  Transition
+  Transition,
+  outerTheme
 } from "../../common/common";
 import styles from "../shareholders.module.scss";
 import { faPenSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ThemeProvider } from "@material-ui/styles";
 
 export class AdminDelegates extends React.Component<any, any> {
   public constructor(props: any, state: any) {
@@ -962,6 +964,7 @@ export class AdminDelegates extends React.Component<any, any> {
     return (
       <div className={styles.shareholders}>
         <div className={styles.delegates}>
+        <ThemeProvider theme={outerTheme}>
           <div className="col-lg-12 col-md-12 col-sm-12 col-sx-12">
             <div className="card">
               <div className={`card-body`}>
@@ -1181,6 +1184,7 @@ export class AdminDelegates extends React.Component<any, any> {
               </div>
             </div>
           </div>
+        </ThemeProvider>
         </div>
       </div>
     );

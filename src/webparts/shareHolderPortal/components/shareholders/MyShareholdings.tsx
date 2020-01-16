@@ -16,76 +16,13 @@ import { Web } from "@pnp/pnpjs";
 import * as _ from "lodash";
 import * as React from "react";
 import { HashRouter as Router, Link, Route, Switch } from "react-router-dom";
-//import { outerTheme } from "../common/common";
+import { outerTheme, CustomTextField } from "../common/common";
 import { MyShareholdingsDetails } from "./MyShareholdingsDetails";
 import styles from "./shareholders.module.scss";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
-export const outerTheme = createMuiTheme({
-  overrides: {
-    MuiInputBase:{
-      input:{
-        zIndex:-1
-      }
-    }
-    ,
-    MuiInput:{
-      underline:{
-        //borderBottom: "2px solid #976340",
-        "&:after": {
-          borderBottom: "1px solid #976340!important"
-        },
-        "&:before": {
-          borderBottom: "1px solid #976340!important"
-        }
-      },
-      root: {
-        color: "black",
-        borderColor: "#976340",
-        "& after": {
-          color: "black",
-          borderColor: "#976340"
-        },
-        "& fieldset": {
-          color: "black",
-          borderColor: "#976340"
-        },
-        "& .MuiInput-underline:after": {
-          borderBottomColor: "#976340"
-        }
-      }
-    },
-    MuiInputLabel: {
-      root: {
-        "&$after": {
-          zIndex: 1,
-        },
-        "&$before": {
-          zIndex: -1,
-        },
-        cursor: "auto",
-        color: "#976340",
-        "&$focused": {
-          color: "#976340"
-        },
-        "& .MuiInput-underline:after": {
-          borderBottomColor: "#976340"
-        },
-      }
-    },
-  },
-  palette: {
-    primary: {
-      light: "#ab8266",
-      main: "#976340",
-      dark: "#69452c",
-      contrastText: "#fff"
-    },
-    secondary: {
-      main: "#cb2030"
-    }
-  }
-});
+
+
 
 export class MyShareholdings extends React.Component<any, any> {
   public constructor(props: any, state: any) {
@@ -267,13 +204,20 @@ export class MyShareholdings extends React.Component<any, any> {
                   </div>
                   <div className="row-fluid" style={{ marginTop: "10px" }}>
                     <div className="row-fluid" style={{ marginBottom: "15px" }}>
-                    <ThemeProvider theme={outerTheme}>
-                      <FormControl fullWidth>
-                        <TextField
-                          onChange={this.handleSearch}
-                          label="Search by Account ID..."
-                        />
-                      </FormControl>
+                        <FormControl fullWidth>
+                          <CustomTextField
+                            onChange={this.handleSearch}
+                            label="Search by Account ID..."
+                          />
+                        </FormControl>
+                        <br/>
+                      <ThemeProvider theme={outerTheme}>
+                        <FormControl fullWidth>
+                          <TextField
+                            onChange={this.handleSearch}
+                            label="Search by Account ID..."
+                          />
+                        </FormControl>
                       </ThemeProvider>
                     </div>
                     <Router>

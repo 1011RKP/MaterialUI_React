@@ -30,9 +30,11 @@ import {
   CustomRadio,
   CustomTextField,
   MDAGroup,
-  ProxyGroup
+  ProxyGroup,
+  outerTheme
 } from "../../common/common";
 import styles from "../shareholders.module.scss";
+import { ThemeProvider } from "@material-ui/styles";
 SPComponentLoader.loadCss(
   "https://wawadev.sharepoint.com/sites/RatnaDev/SiteAssets/ShareHolders/react-picky-date-time.css"
 );
@@ -1236,6 +1238,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
     return (
       <div className={styles.shareholders}>
         <div className={styles.otherInformation}>
+        <ThemeProvider theme={outerTheme}>
           <div className="row-fluid" style={{ overflow: "hidden" }}>
             <div className="row" style={{ marginTop: "10px" }}>
               <div className="col-md-12">{otherInformation}</div>
@@ -1307,6 +1310,7 @@ export class AdminOtherInformation extends React.Component<any, any> {
               </div>
             </div>
           </div>
+        </ThemeProvider>
         </div>
       </div>
     );

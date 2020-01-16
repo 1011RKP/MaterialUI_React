@@ -19,73 +19,8 @@ import { HashRouter as Router, Link, Route, Switch } from "react-router-dom";
 import styles from "../../shareholders/shareholders.module.scss";
 import { AdminShareholdersDetails } from "../Admins/Admin_ShareholdersDetails";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { outerTheme } from "../../common/common"
 
-export const outerTheme = createMuiTheme({
-  overrides: {
-    MuiInputBase:{
-      input:{
-        zIndex:-1
-      }
-    },
-    MuiInput:{
-      formControl:{
-        zIndex:1
-      },
-      underline:{
-        "&:after": {
-          borderBottom: "1px solid #976340!important"
-        },
-        "&:before": {
-          borderBottom: "1px solid #976340!important"
-        }
-      },
-      root: {
-        color: "black",
-        borderColor: "#976340",
-        "& after": {
-          color: "black",
-          borderColor: "#976340"
-        },
-        "& fieldset": {
-          color: "black",
-          borderColor: "#976340"
-        },
-        "& .MuiInput-underline:after": {
-          borderBottomColor: "#976340"
-        }
-      }
-    },
-    MuiInputLabel: {
-      root: {
-        "&$after": {
-          zIndex: 1,
-        },
-        "&$before": {
-          zIndex: -1,
-        },
-        cursor: "auto",
-        color: "#976340",
-        "&$focused": {
-          color: "#976340"
-        },
-        "& .MuiInput-underline:after": {
-          borderBottomColor: "#976340"
-        },
-      }
-    },
-  },
-  palette: {
-    primary: {
-      light: "#ab8266",
-      main: "#976340",
-      dark: "#69452c",
-      contrastText: "#fff"
-    },
-    secondary: {
-      main: "#cb2030"
-    }
-  }
-});
 
 export class AdminShareholdings extends React.Component<any, any> {
   public constructor(props: any, state: any) {

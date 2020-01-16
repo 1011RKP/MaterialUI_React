@@ -19,9 +19,10 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import { sp, Web } from "@pnp/sp";
 import * as React from "react";
-import { CustomRadio, state_DD } from "../../common/common";
+import { CustomRadio, state_DD, outerTheme } from "../../common/common";
 import * as _ from "lodash";
 import styles from "../shareholders.module.scss";
+import { ThemeProvider } from "@material-ui/styles";
 
 export class AdminElections extends React.Component<any, any> {
   public electionRef = React.createRef<HTMLFormElement>();
@@ -980,6 +981,7 @@ export class AdminElections extends React.Component<any, any> {
     return (
       <div className={styles.shareholders}>
         <div className={styles.elections}>
+        <ThemeProvider theme={outerTheme}>
           <form ref={e => this.electionRef} onSubmit={e => e.preventDefault()}>
             <Paper className={styles.paper}>
               <Typography variant="h5" className={styles.electionSubHeadings}>
@@ -1141,6 +1143,7 @@ export class AdminElections extends React.Component<any, any> {
               </div>
             </Paper>
           </form>
+        </ThemeProvider>
         </div>
       </div>
     );
